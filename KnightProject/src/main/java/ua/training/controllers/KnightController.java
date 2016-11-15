@@ -1,6 +1,6 @@
 package ua.training.controllers;
 
-import ua.training.models.IKnight;
+import ua.training.models.knight.IKnight;
 import ua.training.views.View;
 
 public class KnightController {

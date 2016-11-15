@@ -26,4 +26,11 @@ public abstract class AbstractAmmunition implements IAmmunition {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() +
+                "{price=" + price +
+                ", weight=" + weight +
+                '}';
+    }
 }

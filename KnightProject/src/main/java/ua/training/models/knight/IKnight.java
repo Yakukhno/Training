@@ -1,19 +1,20 @@
-package ua.training.models;
+package ua.training.models.knight;
 
-import ua.training.models.ammunition.ChainArmor;
-import ua.training.models.ammunition.Helmet;
-import ua.training.models.ammunition.Shield;
-import ua.training.models.ammunition.Weapon;
+import ua.training.models.ammunition.*;
+
+import java.util.Set;
 
 public interface IKnight {
 
     ChainArmor getChainArmor();
     void setChainArmor(ChainArmor chainArmor);
     Helmet getHelmet();
-    void setChainArmor(Helmet helmet);
+    void setHelmet(Helmet helmet);
     Shield getShield();
     void setShield(Shield shield);
     Weapon getWeapon();
     void setWeapon(Weapon weapon);
+    int ammunitionCost();
+    Set<IAmmunition> sortByWeight();
 
 }
