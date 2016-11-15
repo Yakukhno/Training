@@ -2,17 +2,22 @@ package ua.training.models.ammunition;
 
 public class Weapon extends AbstractAmmunition {
 
-    private int damage;
+    private WeaponType type;
 
-    public Weapon(int price, int weight) {
+    public enum WeaponType {
+        SWORD, SPEAR, CROSSBOW, MACE
+    }
+
+    public Weapon(int price, int weight, WeaponType type) {
         super(price, weight);
+        this.type = type;
     }
 
-    public int getDamage() {
-        return damage;
+    public WeaponType getDamage() {
+        return type;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setDamage(WeaponType damage) {
+        this.type = damage;
     }
 }

@@ -13,6 +13,8 @@ public class KnightController {
         this.view = view;
     }
 
-    public void execute() {}
+    public void execute() {
+        view.showMessage(View.WELCOME_MESSAGE);
+    }
 
 }

@@ -1,10 +1,6 @@
 package ua.training;
 
 import ua.training.controllers.KnightController;
-import ua.training.models.ammunition.ChainArmor;
-import ua.training.models.ammunition.Helmet;
-import ua.training.models.ammunition.Shield;
-import ua.training.models.ammunition.Weapon;
 import ua.training.models.knight.IKnight;
 import ua.training.models.knight.Knight;
 import ua.training.views.View;

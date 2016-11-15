@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class KnightTest {
 
-    IKnight knight;
+    private IKnight knight;
 
     @Before
     public void before() {
@@ -21,10 +21,12 @@ public class KnightTest {
     @Test
     public void testAmmunitionCost() {
 
-        ChainArmor chainArmor = new ChainArmor(200, 23, "steal");
+        ChainArmor chainArmor = new ChainArmor(200, 23,
+                ChainArmor.ChainArmorMaterial.STEAL);
         Helmet helmet = new Helmet(80, 4, false);
-        Shield shield = new Shield(100, 3, "wood", Shield.Shape.SQUARE);
-        Weapon weapon = new Weapon(150, 10);
+        Shield shield = new Shield(100, 3, Shield.ShieldMaterial.WOOD,
+                Shield.Shape.SQUARE);
+        Weapon weapon = new Weapon(150, 10, Weapon.WeaponType.SWORD);
 
         knight.setChainArmor(chainArmor);
         knight.setWeapon(weapon);
@@ -43,10 +45,12 @@ public class KnightTest {
     @Test
     public void testSortByWeight() {
 
-        ChainArmor chainArmor = new ChainArmor(200, 23, "steal");
+        ChainArmor chainArmor = new ChainArmor(200, 23,
+                ChainArmor.ChainArmorMaterial.STEAL);
         Helmet helmet = new Helmet(80, 4, false);
-        Shield shield = new Shield(100, 3, "wood", Shield.Shape.SQUARE);
-        Weapon weapon = new Weapon(150, 10);
+        Shield shield = new Shield(100, 3, Shield.ShieldMaterial.WOOD,
+                Shield.Shape.SQUARE);
+        Weapon weapon = new Weapon(150, 10, Weapon.WeaponType.SWORD);
 
         IAmmunition[] ammunitionArray = new IAmmunition[] {
                 shield, helmet, weapon, chainArmor

@@ -2,18 +2,22 @@ package ua.training.models.ammunition;
 
 public class ChainArmor extends AbstractAmmunition {
 
-    private String material;
+    private ChainArmorMaterial material;
 
-    public ChainArmor(int price, int weight, String material) {
+    public enum ChainArmorMaterial {
+        ALUMINUM, COPPER, STEAL, LEATHER
+    }
+
+    public ChainArmor(int price, int weight, ChainArmorMaterial material) {
         super(price, weight);
         this.material = material;
     }
 
-    public String getMaterial() {
+    public ChainArmorMaterial getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public void setMaterial(ChainArmorMaterial material) {
         this.material = material;
     }
 
