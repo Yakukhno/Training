@@ -5,6 +5,8 @@ import org.junit.Test;
 import ua.training.models.ammunition.*;
 import ua.training.models.knight.IKnight;
 import ua.training.models.knight.Knight;
+import ua.training.models.knight.KnightBuilder;
+
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -21,24 +23,16 @@ public class KnightTest {
     @Test
     public void testAmmunitionCost() {
 
-        ChainArmor chainArmor = new ChainArmor(200, 23,
-                ChainArmor.ChainArmorMaterial.STEAL);
-        Helmet helmet = new Helmet(80, 4, false);
-        Shield shield = new Shield(100, 3, Shield.ShieldMaterial.WOOD,
-                Shield.Shape.SQUARE);
-        Weapon weapon = new Weapon(150, 10, Weapon.WeaponType.SWORD);
+        knight = new KnightBuilder()
+                .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
+                .buildHelmet(false)
+                .buildShield(Shield.ShieldMaterial.WOOD, Shield.Shape.SQUARE)
+                .buildWeapon(Weapon.WeaponType.SWORD)
+                .build();
 
-        knight.setChainArmor(chainArmor);
-        knight.setWeapon(weapon);
-
-        assertEquals(knight.ammunitionCost(), chainArmor.getPrice()
-                + weapon.getPrice());
-
-        knight.setHelmet(helmet);
-        knight.setShield(shield);
-
-        assertEquals(knight.ammunitionCost(), chainArmor.getPrice()
-                + helmet.getPrice() + shield.getPrice() + weapon.getPrice());
+        assertEquals(knight.ammunitionCost(), knight.getChainArmor().getPrice()
+                + knight.getHelmet().getPrice() + knight.getShield().getPrice()
+                + knight.getWeapon().getPrice());
 
     }
 
