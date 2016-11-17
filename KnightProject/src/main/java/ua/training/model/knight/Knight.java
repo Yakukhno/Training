@@ -10,33 +10,27 @@ public class Knight implements IAmmunitionCarrier {
     private Map<String, IAmmunition> ammunition = new HashMap<>();
 
     public int getAmmunitionCost() {
-        int cost = 0;
-
-        for (IAmmunition x : ammunition.values()) {
-            cost += x.getPrice();
-        }
-
+        int cost = ammunition.values()
+                .stream()
+                .mapToInt(IAmmunition::getPrice)
+                .reduce((s1, s2) -> (s1 + s2))
+                .orElse(0);
         return cost;
     }
 
     public List<IAmmunition> sortAmmunitionByWeight() {
-
-        Comparator<IAmmunition> comparator = (IAmmunition o1, IAmmunition o2)
-                -> (o1.getWeight() == o2.getWeight())
-                ? 0
-                : (o1.getWeight() > o2.getWeight()) ? 1 : -1;
-
-        Collection<IAmmunition> collection = ammunition.values();
-        List<IAmmunition> list = new ArrayList<>();
-        list.addAll(collection);
-        Collections.sort(list, comparator);
-
+        List<IAmmunition> list = ammunition.values()
+                .stream()
+                .sorted((o1, o2)
+                        -> (o1.getWeight() == o2.getWeight())
+                        ? 0
+                        : (o1.getWeight() > o2.getWeight()) ? 1 : -1)
+                .collect(Collectors.toList());
         return list;
     }
 
     public List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier) {
-        Collection<IAmmunition> collection = ammunition.values();
-        List<IAmmunition> list = collection
+        List<IAmmunition> list = ammunition.values()
                 .stream()
                 .filter(item -> (item.getPrice() < maxBarrier)
                         && (item.getPrice() > minBarrier))

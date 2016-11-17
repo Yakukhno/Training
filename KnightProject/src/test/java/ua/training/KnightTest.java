@@ -17,36 +17,26 @@ public class KnightTest {
 
     @Before
     public void before() {
-        knight = new Knight();
-    }
-
-    @Test
-    public void testAmmunitionCost() {
-        knight = new KnightBuilder()
-                .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
-                .buildHelmet(false)
-                .buildShield(Shield.ShieldMaterial.WOOD, Shield.Shape.SQUARE)
-                .buildWeapon(Weapon.WeaponType.SWORD)
-                .build();
-
-        assertEquals(knight.getAmmunitionCost(), knight.getChainArmor().getPrice()
-                + knight.getHelmet().getPrice() + knight.getShield().getPrice()
-                + knight.getWeapon().getPrice());
-
-        knight = new KnightBuilder().build();
-
-        assertEquals(knight.getAmmunitionCost(), 0);
-    }
-
-    @Test
-    public void testSortByWeight() {
         knight = new KnightBuilder()
                 .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
                 .buildHelmet(false)
                 .buildShield(Shield.ShieldMaterial.COPPER, Shield.Shape.SQUARE)
                 .buildWeapon(Weapon.WeaponType.SWORD)
                 .build();
+    }
 
+    @Test
+    public void testAmmunitionCost() {
+        assertEquals(knight.getAmmunitionCost(), knight.getChainArmor().getPrice()
+                + knight.getHelmet().getPrice() + knight.getShield().getPrice()
+                + knight.getWeapon().getPrice());
+
+        knight = new KnightBuilder().build();
+        assertEquals(knight.getAmmunitionCost(), 0);
+    }
+
+    @Test
+    public void testSortByWeight() {
         List<IAmmunition> ammunitionList = knight.sortAmmunitionByWeight();
 
         boolean isSorted = true;
@@ -62,26 +52,15 @@ public class KnightTest {
 
     @Test
     public void testFindInPriceRange() {
-        knight = new KnightBuilder()
-                .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
-                .buildHelmet(false)
-                .buildShield(Shield.ShieldMaterial.COPPER, Shield.Shape.SQUARE)
-                .buildWeapon(Weapon.WeaponType.SWORD)
-                .build();
-
         int minBarrier = 30;
         int maxBarrier = 220;
         List<IAmmunition> ammunitionList = knight.findInPriceRange(minBarrier, maxBarrier);
 
-        boolean isTrueSearch = true;
-        for (int i = 0; i < ammunitionList.size(); i++) {
-            if ((ammunitionList.get(i).getPrice() > maxBarrier)
-                    || (ammunitionList.get(i).getPrice() < minBarrier)) {
-                isTrueSearch = false;
-                break;
-            }
-        }
-        assertTrue(isTrueSearch);
+        boolean isIncorrectSearch = ammunitionList
+                .stream()
+                .allMatch(item -> (item.getPrice() > maxBarrier)
+                    || (item.getPrice() < minBarrier));
+        assertFalse(isIncorrectSearch);
     }
 
 }
