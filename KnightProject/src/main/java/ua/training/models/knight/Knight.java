@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Knight implements IKnight {
 
-    Map<String, IAmmunition> ammunition = new HashMap<>();
+    private Map<String, IAmmunition> ammunition = new HashMap<>();
 
     public int ammunitionCost() {
         int cost = 0;
@@ -18,17 +18,19 @@ public class Knight implements IKnight {
         return cost;
     }
 
-    public Set<IAmmunition> sortByWeight() {
+    public List<IAmmunition> sortByWeight() {
 
         Comparator<IAmmunition> comparator = (IAmmunition o1, IAmmunition o2)
                 -> (o1.getWeight() == o2.getWeight())
                 ? 0
                 : (o1.getWeight() > o2.getWeight()) ? 1 : -1;
 
-        Set<IAmmunition> sortedAmmunition = new TreeSet<>(comparator);
-        sortedAmmunition.addAll(ammunition.values());
+        Collection<IAmmunition> collection = ammunition.values();
+        List<IAmmunition> list = new ArrayList<>();
+        list.addAll(collection);
+        Collections.sort(list, comparator);
 
-        return sortedAmmunition;
+        return list;
     }
 
     public ChainArmor getChainArmor() {

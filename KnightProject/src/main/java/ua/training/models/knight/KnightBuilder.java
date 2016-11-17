@@ -12,7 +12,7 @@ import static ua.training.models.ammunition.Weapon.WeaponType.*;
 
 public class KnightBuilder {
 
-    private Knight knight;
+    private IKnight knight;
 
     public KnightBuilder() {
         knight = new Knight();
@@ -138,7 +138,7 @@ public class KnightBuilder {
         return this;
     }
 
-    public Knight build() {
+    public IKnight build() {
 
         return knight;
     }

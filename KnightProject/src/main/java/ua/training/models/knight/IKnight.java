@@ -2,6 +2,7 @@ package ua.training.models.knight;
 
 import ua.training.models.ammunition.*;
 
+import java.util.List;
 import java.util.Set;
 
 public interface IKnight {
@@ -15,6 +16,6 @@ public interface IKnight {
     Weapon getWeapon();
     void setWeapon(Weapon weapon);
     int ammunitionCost();
-    Set<IAmmunition> sortByWeight();
+    List<IAmmunition> sortByWeight();
 
 }

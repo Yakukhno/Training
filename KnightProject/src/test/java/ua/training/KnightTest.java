@@ -7,6 +7,7 @@ import ua.training.models.knight.IKnight;
 import ua.training.models.knight.Knight;
 import ua.training.models.knight.KnightBuilder;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -55,7 +56,7 @@ public class KnightTest {
         knight.setHelmet(helmet);
         knight.setShield(shield);
 
-        Set<IAmmunition> setAmmunition = knight.sortByWeight();
+        List<IAmmunition> setAmmunition = knight.sortByWeight();
 
         assertArrayEquals(setAmmunition.toArray(), ammunitionArray);
     }
