@@ -9,17 +9,43 @@ import ua.training.view.View;
 
 import java.util.Scanner;
 
+/**
+ * Controller for {@link Knight} class
+ *
+ * @author Ivan Yakukhno
+ */
 public class KnightController {
 
+    /**
+     * Model of knight
+     */
     private Knight knight;
+
+    /**
+     * View
+     */
     private View view;
+
+    /**
+     * Builder for knight object
+     */
     private AbstractKnightBuilder knightBuilder;
 
+    /**
+     * Constructor with knightBuilder, view params.
+     * @param knightBuilder builder for knight object
+     * @param view view
+     */
     public KnightController(AbstractKnightBuilder knightBuilder, View view) {
         this.knightBuilder = knightBuilder;
         this.view = view;
     }
 
+    /**
+     * Initial method. Initializes scanner from console, sends messages
+     * in view, invokes methods, which chooses parameters to build knight,
+     * and builds final version of knight.
+     */
     public void execute() {
         Scanner scanner = new Scanner(System.in);
 
@@ -58,6 +84,14 @@ public class KnightController {
                 knight.findInPriceRange(minBarrier, maxBarrier));
     }
 
+    /**
+     * Reads user input and checks, if user number less than limit value.
+     * If user integer input wrong, method call itself, until user inputs
+     * correct data.
+     * @param scanner scanner of user input
+     * @param numberOfOptions limit value
+     * @return user input integer
+     */
     private int readUserInput(Scanner scanner, int numberOfOptions) {
         int userInput;
         try {
@@ -72,25 +106,47 @@ public class KnightController {
         return userInput;
     }
 
+    /**
+     * Chooses correct parameter for builder method, which builds chain armor,
+     * in accordance with user input code.
+     * @param code user input code
+     *
+     * @throws IllegalArgumentException if user code doesn't process in
+     * switch construction
+     */
     private void chooseChainArmor(int code) {
         switch (code) {
             case 1 :
-                knightBuilder.buildChainArmor(ChainArmor.ChainArmorMaterial.ALUMINUM);
+                knightBuilder.buildChainArmor(
+                        ChainArmor.ChainArmorMaterial.ALUMINUM);
                 break;
             case 2 :
-                knightBuilder.buildChainArmor(ChainArmor.ChainArmorMaterial.COPPER);
+                knightBuilder.buildChainArmor(
+                        ChainArmor.ChainArmorMaterial.COPPER);
                 break;
             case 3 :
-                knightBuilder.buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL);
+                knightBuilder.buildChainArmor(
+                        ChainArmor.ChainArmorMaterial.STEAL);
                 break;
             case 4 :
-                knightBuilder.buildChainArmor(ChainArmor.ChainArmorMaterial.LEATHER);
+                knightBuilder.buildChainArmor(
+                        ChainArmor.ChainArmorMaterial.LEATHER);
+                break;
+            case 0 :
                 break;
             default:
                 throw new IllegalArgumentException("Illegal code");
         }
     }
 
+    /**
+     * Chooses correct parameter for builder method, which builds helmet,
+     * in accordance with user input code.
+     * @param code user input code
+     *
+     * @throws IllegalArgumentException if user code doesn't process in
+     * switch construction
+     */
     private void chooseHelmet(int code) {
         switch (code) {
             case 1 :
@@ -99,13 +155,24 @@ public class KnightController {
             case 2 :
                 knightBuilder.buildHelmet(false);
                 break;
+            case 0 :
+                break;
             default:
                 throw new IllegalArgumentException("Illegal code");
         }
     }
 
+    /**
+     * Chooses correct parameter for builder method, which builds shield,
+     * in accordance with user input code.
+     * @param codeOfMaterial user input code of material
+     * @param codeOfShape user input code of shape
+     *
+     * @throws IllegalArgumentException if user code doesn't process in
+     * switch construction
+     */
     private void chooseShield(int codeOfMaterial, int codeOfShape) {
-        Shield.ShieldMaterial material;
+        Shield.ShieldMaterial material = null;
         switch (codeOfMaterial) {
             case 1 :
                 material = Shield.ShieldMaterial.COPPER;
@@ -115,6 +182,8 @@ public class KnightController {
                 break;
             case 3 :
                 material = Shield.ShieldMaterial.WOOD;
+                break;
+            case 0 :
                 break;
             default:
                 throw new IllegalArgumentException("Illegal code");
@@ -135,6 +204,14 @@ public class KnightController {
         }
     }
 
+    /**
+     * Chooses correct parameter for builder method, which builds weapon,
+     * in accordance with user input code.
+     * @param code user input code
+     *
+     * @throws IllegalArgumentException if user code doesn't process in
+     * switch construction
+     */
     private void chooseWeapon(int code) {
         switch (code) {
             case 1 :
@@ -148,6 +225,8 @@ public class KnightController {
                 break;
             case 4 :
                 knightBuilder.buildWeapon(Weapon.WeaponType.MACE);
+                break;
+            case 0 :
                 break;
             default:
                 throw new IllegalArgumentException("Illegal code");

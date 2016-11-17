@@ -10,8 +10,27 @@ import ua.training.model.knight.ammunition.Weapon;
 import static ua.training.model.knight.ammunition.ChainArmor.ChainArmorMaterial.*;
 import static ua.training.model.knight.ammunition.Weapon.WeaponType.*;
 
+/**
+ * Implementation of <tt>AbstractKnightBuilder</tt> abstract class.
+ * Class build {@link Knight} object using data from {@link Price} enum.
+ *
+ * @author Ivan Yakukhno
+ * @see Knight
+ * @see AbstractKnightBuilder
+ * @see IAmmunitionCarrier
+ */
 public class KnightBuilder extends AbstractKnightBuilder {
 
+    /**
+     * Sets chain armor attribute in knight property
+     * using data from {@link Price} enum.
+     * @param material element of {@link ChainArmor.ChainArmorMaterial} enum
+     * @return same instance of this class with changed knight object
+     *
+     * @throws IllegalArgumentException if defined
+     * in {@link ChainArmor.ChainArmorMaterial} enum element doesn't process
+     * in switch construction
+     */
     public KnightBuilder buildChainArmor(ChainArmorMaterial material) {
         switch (material) {
             case ALUMINUM :
@@ -44,6 +63,15 @@ public class KnightBuilder extends AbstractKnightBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Uses data from {@link Price} enum.
+     *
+     * @throws IllegalArgumentException if defined
+     * in {@link Shield.ShieldMaterial} or {@link Shield.Shape} enum element
+     * doesn't process in switch construction
+     */
     public KnightBuilder buildShield(Shield.ShieldMaterial material, Shield.Shape shape) {
         Shield shield;
 
@@ -84,6 +112,14 @@ public class KnightBuilder extends AbstractKnightBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Uses data from {@link Price} enum.
+     *
+     * @throws IllegalArgumentException if defined in {@link Weapon.WeaponType}
+     * enum element doesn't process in switch construction
+     */
     public KnightBuilder buildWeapon(Weapon.WeaponType type) {
         switch (type) {
             case SWORD :
@@ -117,6 +153,11 @@ public class KnightBuilder extends AbstractKnightBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Uses data from {@link Price} enum.
+     */
     public KnightBuilder buildHelmet(boolean isProtectedFace) {
         if (isProtectedFace) {
             knight.setHelmet(new Helmet(

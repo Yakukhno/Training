@@ -5,10 +5,27 @@ import ua.training.model.knight.ammunition.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of <tt>IAmmunitionCarrier</tt> interface, which presents knight.
+ * Class contains collection of ammunition and methods to work with it.
+ * To create instance of this class use {@link KnightBuilder}.
+ *
+ * @author Ivan Yakukhno
+ * @see IAmmunitionCarrier
+ * @see KnightBuilder
+ */
+
 public class Knight implements IAmmunitionCarrier {
 
+    /**
+     * Container of ammunition.
+     */
     private Map<String, IAmmunition> ammunition = new HashMap<>();
 
+    /**
+     * Returns total cost of ammunition in container.
+     * @return total cost of ammunition in container
+     */
     public int getAmmunitionCost() {
         int cost = ammunition.values()
                 .stream()
@@ -18,6 +35,10 @@ public class Knight implements IAmmunitionCarrier {
         return cost;
     }
 
+    /**
+     * Sorts container elements by weight in ascending order.
+     * @return list, which sorted by weight in ascending order
+     */
     public List<IAmmunition> sortAmmunitionByWeight() {
         List<IAmmunition> list = ammunition.values()
                 .stream()
@@ -29,6 +50,13 @@ public class Knight implements IAmmunitionCarrier {
         return list;
     }
 
+    /**
+     * Searches elements in container, which are within the range of price.
+     * Barriers of range transmitted in parameters.
+     * @param minBarrier minimum barrier of range
+     * @param maxBarrier maximum barrier of range
+     * @return list with elements, which are within the range of price
+     */
     public List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier) {
         List<IAmmunition> list = ammunition.values()
                 .stream()
@@ -37,6 +65,8 @@ public class Knight implements IAmmunitionCarrier {
                 .collect(Collectors.toList());
         return list;
     }
+
+    //getters & setters
 
     public ChainArmor getChainArmor() {
         return (ChainArmor) ammunition.get("chainArmor");
