@@ -60,4 +60,28 @@ public class KnightTest {
         assertTrue(isSorted);
     }
 
+    @Test
+    public void testFindInPriceRange() {
+        knight = new KnightBuilder()
+                .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
+                .buildHelmet(false)
+                .buildShield(Shield.ShieldMaterial.COPPER, Shield.Shape.SQUARE)
+                .buildWeapon(Weapon.WeaponType.SWORD)
+                .build();
+
+        int minBarrier = 30;
+        int maxBarrier = 220;
+        List<IAmmunition> ammunitionList = knight.findInPriceRange(minBarrier, maxBarrier);
+
+        boolean isTrueSearch = true;
+        for (int i = 0; i < ammunitionList.size(); i++) {
+            if ((ammunitionList.get(i).getPrice() > maxBarrier)
+                    || (ammunitionList.get(i).getPrice() < minBarrier)) {
+                isTrueSearch = false;
+                break;
+            }
+        }
+        assertTrue(isTrueSearch);
+    }
+
 }

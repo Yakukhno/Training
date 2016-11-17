@@ -32,10 +32,12 @@ public class KnightController {
         chooseHelmet(readUserInput(scanner, 2));
 
         view.showMessage(View.SHIELD_MATERIAL_MESSAGE);
-        int shieldMaterialCode = readUserInput(scanner, Shield.ShieldMaterial.values().length);
+        int shieldMaterialCode = readUserInput(scanner,
+                Shield.ShieldMaterial.values().length);
         if (shieldMaterialCode != 0) {
             view.showMessage(View.SHIELD_SHAPE_MESSAGE);
-            chooseShield(shieldMaterialCode, readUserInput(scanner, Shield.Shape.values().length));
+            chooseShield(shieldMaterialCode, readUserInput(scanner,
+                    Shield.Shape.values().length));
         }
 
         view.showMessage(View.WEAPON_MESSAGE);
@@ -43,7 +45,17 @@ public class KnightController {
 
         knight = knightBuilder.build();
 
-        System.out.println(knight.sortAmmunitionByWeight());
+        view.showMessage(View.SORTED_MESSAGE,
+                knight.sortAmmunitionByWeight());
+
+        view.showMessage(View.RANGE_MESSAGE);
+        view.showMessage(View.MIN_BARRIER_MESSAGE);
+        int minBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+        view.showMessage(View.MAX_BARRIER_MESSAGE);
+        int maxBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+
+        view.showMessage(View.RANGE_RESULT_MESSAGE,
+                knight.findInPriceRange(minBarrier, maxBarrier));
     }
 
     private int readUserInput(Scanner scanner, int numberOfOptions) {

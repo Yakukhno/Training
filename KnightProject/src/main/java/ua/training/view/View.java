@@ -1,5 +1,7 @@
 package ua.training.view;
 
+import java.util.Collection;
+
 public class View {
 
     public static final String WELCOME_MESSAGE = "Hello, please, construct " +
@@ -18,6 +20,11 @@ public class View {
     public static final String WEAPON_MESSAGE = "Choose weapon for " +
             "your knight : 1 - sword, 2 - spear, 3 - crossbow, 4 - mace " +
             "or 0 if don't want to give weapon to knight.";
+    public static final String RANGE_MESSAGE = "Please, input the price range for searching.";
+    public static final String MIN_BARRIER_MESSAGE = "Min barrier:";
+    public static final String MAX_BARRIER_MESSAGE = "Max barrier:";
+    public static final String SORTED_MESSAGE = "Sorted by weight:";
+    public static final String RANGE_RESULT_MESSAGE = "Found in specified range:";
 
     public static final String ERROR_INPUT_MESSAGE = "Wrong data input!" +
             " Try again!";
@@ -26,4 +33,7 @@ public class View {
         System.out.println(string);
     }
 
+    public void showMessage(String string, Collection<?> collection) {
+        System.out.println('\n' + string + " " + collection + '\n');
+    }
 }

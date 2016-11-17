@@ -12,5 +12,6 @@ public interface IAmmunitionCarrier {
     Weapon getWeapon();
     int getAmmunitionCost();
     List<IAmmunition> sortAmmunitionByWeight();
+    List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier);
 
 }

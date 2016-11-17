@@ -3,6 +3,7 @@ package ua.training.model.knight;
 import ua.training.model.knight.ammunition.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Knight implements IAmmunitionCarrier {
 
@@ -30,6 +31,16 @@ public class Knight implements IAmmunitionCarrier {
         list.addAll(collection);
         Collections.sort(list, comparator);
 
+        return list;
+    }
+
+    public List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier) {
+        Collection<IAmmunition> collection = ammunition.values();
+        List<IAmmunition> list = collection
+                .stream()
+                .filter(item -> (item.getPrice() < maxBarrier)
+                        && (item.getPrice() > minBarrier))
+                .collect(Collectors.toList());
         return list;
     }
 
