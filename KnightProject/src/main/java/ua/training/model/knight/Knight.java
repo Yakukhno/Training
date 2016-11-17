@@ -1,14 +1,14 @@
-package ua.training.models.knight;
+package ua.training.model.knight;
 
-import ua.training.models.ammunition.*;
+import ua.training.model.knight.ammunition.*;
 
 import java.util.*;
 
-public class Knight implements IKnight {
+public class Knight implements IAmmunitionCarrier {
 
     private Map<String, IAmmunition> ammunition = new HashMap<>();
 
-    public int ammunitionCost() {
+    public int getAmmunitionCost() {
         int cost = 0;
 
         for (IAmmunition x : ammunition.values()) {
@@ -18,7 +18,7 @@ public class Knight implements IKnight {
         return cost;
     }
 
-    public List<IAmmunition> sortByWeight() {
+    public List<IAmmunition> sortAmmunitionByWeight() {
 
         Comparator<IAmmunition> comparator = (IAmmunition o1, IAmmunition o2)
                 -> (o1.getWeight() == o2.getWeight())
@@ -37,7 +37,7 @@ public class Knight implements IKnight {
         return (ChainArmor) ammunition.get("chainArmor");
     }
 
-    public void setChainArmor(ChainArmor chainArmor) {
+    void setChainArmor(ChainArmor chainArmor) {
         ammunition.put("chainArmor", chainArmor);
     }
 
@@ -45,7 +45,7 @@ public class Knight implements IKnight {
         return (Helmet) ammunition.get("helmet");
     }
 
-    public void setHelmet(Helmet helmet) {
+    void setHelmet(Helmet helmet) {
         ammunition.put("helmet", helmet);
     }
 
@@ -53,7 +53,7 @@ public class Knight implements IKnight {
         return (Shield) ammunition.get("shield");
     }
 
-    public void setShield(Shield shield) {
+    void setShield(Shield shield) {
         ammunition.put("shield", shield);
     }
 
@@ -61,7 +61,7 @@ public class Knight implements IKnight {
         return (Weapon) ammunition.get("weapon");
     }
 
-    public void setWeapon(Weapon weapon) {
+    void setWeapon(Weapon weapon) {
         ammunition.put("weapon", weapon);
     }
 }

@@ -2,19 +2,18 @@ package ua.training;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.training.models.ammunition.*;
-import ua.training.models.knight.IKnight;
-import ua.training.models.knight.Knight;
-import ua.training.models.knight.KnightBuilder;
+import ua.training.model.knight.ammunition.*;
+import ua.training.model.knight.IAmmunitionCarrier;
+import ua.training.model.knight.Knight;
+import ua.training.model.knight.KnightBuilder;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class KnightTest {
 
-    private IKnight knight;
+    private IAmmunitionCarrier knight;
 
     @Before
     public void before() {
@@ -23,7 +22,6 @@ public class KnightTest {
 
     @Test
     public void testAmmunitionCost() {
-
         knight = new KnightBuilder()
                 .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
                 .buildHelmet(false)
@@ -31,34 +29,35 @@ public class KnightTest {
                 .buildWeapon(Weapon.WeaponType.SWORD)
                 .build();
 
-        assertEquals(knight.ammunitionCost(), knight.getChainArmor().getPrice()
+        assertEquals(knight.getAmmunitionCost(), knight.getChainArmor().getPrice()
                 + knight.getHelmet().getPrice() + knight.getShield().getPrice()
                 + knight.getWeapon().getPrice());
 
+        knight = new KnightBuilder().build();
+
+        assertEquals(knight.getAmmunitionCost(), 0);
     }
 
     @Test
     public void testSortByWeight() {
+        knight = new KnightBuilder()
+                .buildChainArmor(ChainArmor.ChainArmorMaterial.STEAL)
+                .buildHelmet(false)
+                .buildShield(Shield.ShieldMaterial.COPPER, Shield.Shape.SQUARE)
+                .buildWeapon(Weapon.WeaponType.SWORD)
+                .build();
 
-        ChainArmor chainArmor = new ChainArmor(200, 23,
-                ChainArmor.ChainArmorMaterial.STEAL);
-        Helmet helmet = new Helmet(80, 4, false);
-        Shield shield = new Shield(100, 3, Shield.ShieldMaterial.WOOD,
-                Shield.Shape.SQUARE);
-        Weapon weapon = new Weapon(150, 10, Weapon.WeaponType.SWORD);
+        List<IAmmunition> ammunitionList = knight.sortAmmunitionByWeight();
 
-        IAmmunition[] ammunitionArray = new IAmmunition[] {
-                shield, helmet, weapon, chainArmor
-        };
-
-        knight.setChainArmor(chainArmor);
-        knight.setWeapon(weapon);
-        knight.setHelmet(helmet);
-        knight.setShield(shield);
-
-        List<IAmmunition> setAmmunition = knight.sortByWeight();
-
-        assertArrayEquals(setAmmunition.toArray(), ammunitionArray);
+        boolean isSorted = true;
+        for (int i = 0; i < ammunitionList.size() - 1; i++) {
+            if (ammunitionList.get(i).getWeight()
+                    > ammunitionList.get(i + 1).getWeight()) {
+                isSorted = false;
+                break;
+            }
+        }
+        assertTrue(isSorted);
     }
 
 }

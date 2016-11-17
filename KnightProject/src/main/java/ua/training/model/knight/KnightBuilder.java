@@ -1,22 +1,16 @@
-package ua.training.models.knight;
+package ua.training.model.knight;
 
 import ua.training.database.Price;
-import ua.training.models.ammunition.ChainArmor;
-import ua.training.models.ammunition.ChainArmor.ChainArmorMaterial;
-import ua.training.models.ammunition.Helmet;
-import ua.training.models.ammunition.Shield;
-import ua.training.models.ammunition.Weapon;
+import ua.training.model.knight.ammunition.ChainArmor;
+import ua.training.model.knight.ammunition.ChainArmor.ChainArmorMaterial;
+import ua.training.model.knight.ammunition.Helmet;
+import ua.training.model.knight.ammunition.Shield;
+import ua.training.model.knight.ammunition.Weapon;
 
-import static ua.training.models.ammunition.ChainArmor.ChainArmorMaterial.*;
-import static ua.training.models.ammunition.Weapon.WeaponType.*;
+import static ua.training.model.knight.ammunition.ChainArmor.ChainArmorMaterial.*;
+import static ua.training.model.knight.ammunition.Weapon.WeaponType.*;
 
-public class KnightBuilder {
-
-    private IKnight knight;
-
-    public KnightBuilder() {
-        knight = new Knight();
-    }
+public class KnightBuilder extends AbstractKnightBuilder {
 
     public KnightBuilder buildChainArmor(ChainArmorMaterial material) {
         switch (material) {
@@ -136,11 +130,6 @@ public class KnightBuilder {
                     false));
         }
         return this;
-    }
-
-    public IKnight build() {
-
-        return knight;
     }
 
 }

@@ -1,4 +1,4 @@
-package ua.training.views;
+package ua.training.view;
 
 public class View {
 

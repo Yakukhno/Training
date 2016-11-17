@@ -1,4 +1,4 @@
-package ua.training.models.ammunition;
+package ua.training.model.knight.ammunition;
 
 public class ChainArmor extends AbstractAmmunition {
 

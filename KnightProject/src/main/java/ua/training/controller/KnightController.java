@@ -1,24 +1,22 @@
-package ua.training.controllers;
+package ua.training.controller;
 
-import ua.training.models.ammunition.ChainArmor;
-import ua.training.models.ammunition.Shield;
-import ua.training.models.ammunition.Weapon;
-import ua.training.models.knight.IKnight;
-import ua.training.models.knight.Knight;
-import ua.training.models.knight.KnightBuilder;
-import ua.training.views.View;
+import ua.training.model.knight.ammunition.ChainArmor;
+import ua.training.model.knight.ammunition.Shield;
+import ua.training.model.knight.ammunition.Weapon;
+import ua.training.model.knight.AbstractKnightBuilder;
+import ua.training.model.knight.Knight;
+import ua.training.view.View;
 
 import java.util.Scanner;
 
 public class KnightController {
 
-    private IKnight knight;
+    private Knight knight;
     private View view;
+    private AbstractKnightBuilder knightBuilder;
 
-    private KnightBuilder knightBuilder = new KnightBuilder();
-
-    public KnightController(IKnight knight, View view) {
-        this.knight = knight;
+    public KnightController(AbstractKnightBuilder knightBuilder, View view) {
+        this.knightBuilder = knightBuilder;
         this.view = view;
     }
 
@@ -45,7 +43,7 @@ public class KnightController {
 
         knight = knightBuilder.build();
 
-        System.out.println(knight.sortByWeight());
+        System.out.println(knight.sortAmmunitionByWeight());
     }
 
     private int readUserInput(Scanner scanner, int numberOfOptions) {
@@ -77,6 +75,7 @@ public class KnightController {
                 knightBuilder.buildChainArmor(ChainArmor.ChainArmorMaterial.LEATHER);
                 break;
             default:
+                throw new IllegalArgumentException("Illegal code");
         }
     }
 
@@ -89,11 +88,12 @@ public class KnightController {
                 knightBuilder.buildHelmet(false);
                 break;
             default:
+                throw new IllegalArgumentException("Illegal code");
         }
     }
 
     private void chooseShield(int codeOfMaterial, int codeOfShape) {
-        Shield.ShieldMaterial material = null;
+        Shield.ShieldMaterial material;
         switch (codeOfMaterial) {
             case 1 :
                 material = Shield.ShieldMaterial.COPPER;
@@ -105,6 +105,7 @@ public class KnightController {
                 material = Shield.ShieldMaterial.WOOD;
                 break;
             default:
+                throw new IllegalArgumentException("Illegal code");
         }
 
         switch (codeOfShape) {
@@ -118,6 +119,7 @@ public class KnightController {
                 knightBuilder.buildShield(material, Shield.Shape.SQUARE);
                 break;
             default:
+                throw new IllegalArgumentException("Illegal code");
         }
     }
 
@@ -136,6 +138,7 @@ public class KnightController {
                 knightBuilder.buildWeapon(Weapon.WeaponType.MACE);
                 break;
             default:
+                throw new IllegalArgumentException("Illegal code");
         }
     }
 
