@@ -3,7 +3,7 @@ package ua.training.view;
 import java.util.Collection;
 
 /**
- * Class print string in console.
+ * Class prints string in console.
  *
  * @author Ivan Yakukhno
  */

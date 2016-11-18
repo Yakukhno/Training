@@ -17,14 +17,14 @@ public class Shield extends AbstractAmmunition {
     private Shape shape;
 
     /**
-     * Enumeration of helmet materials.
+     * Enumeration of shield materials.
      */
     public enum ShieldMaterial {
         COPPER, STEAL, WOOD
     }
 
     /**
-     * Enumeration of helmet shape.
+     * Enumeration of shield shape.
      */
     public enum Shape {
         ROUND, OVAL, SQUARE

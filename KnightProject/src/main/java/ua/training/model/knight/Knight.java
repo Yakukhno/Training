@@ -23,6 +23,11 @@ public class Knight implements IAmmunitionCarrier {
     private Map<String, IAmmunition> ammunition = new HashMap<>();
 
     /**
+     * Constructor with package-private access.
+     */
+    Knight() {}
+
+    /**
      * Returns total cost of ammunition in container.
      * @return total cost of ammunition in container
      */

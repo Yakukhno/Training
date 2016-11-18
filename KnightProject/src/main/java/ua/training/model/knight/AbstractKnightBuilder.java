@@ -5,8 +5,7 @@ import ua.training.model.knight.ammunition.Shield;
 import ua.training.model.knight.ammunition.Weapon;
 
 /**
- * This class provides a skeletal implementation of the {@link Knight}
- * interface to minimize the effort required to implement this interface.
+ * This class provides methods to build object of {@link Knight} class.
  *
  * @author Ivan Yakukhno
  * @see Knight
@@ -19,7 +18,7 @@ public abstract class AbstractKnightBuilder {
     protected Knight knight;
 
     /**
-     * Constructor initialize knight reference
+     * Constructor initialize knight reference.
      * with object of {@link Knight} class.
      */
     protected AbstractKnightBuilder() {
