@@ -31,6 +31,7 @@ public class View {
     public static final String MAX_BARRIER_MESSAGE = "Max barrier:";
     public static final String SORTED_MESSAGE = "Sorted by weight:";
     public static final String RANGE_RESULT_MESSAGE = "Found in specified range:";
+    public static final String COST_MESSAGE = "Cost of ammunition:";
     public static final String ERROR_INPUT_MESSAGE = "Wrong data input!" +
             " Try again!";
 
@@ -48,6 +49,16 @@ public class View {
      * @param collection collection to output
      */
     public void showMessage(String string, Collection<?> collection) {
-        System.out.println('\n' + string + " " + collection + '\n');
+        System.out.println(string + " " + collection + '\n');
     }
+
+    /**
+     * Outputs value with message in console stream
+     * @param string message to output
+     * @param value value to output
+     */
+    public void showMessage(String string, int value) {
+        System.out.println(string + " " + value + '\n');
+    }
+
 }

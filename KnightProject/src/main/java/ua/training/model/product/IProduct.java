@@ -1,13 +1,13 @@
-package ua.training.model.knight.ammunition;
+package ua.training.model.product;
 
 /**
  * Interface describes behaviour of some entity,
  * which operate with price and weight.
  *
  * @author Ivan Yakuknno
- * @see AbstractAmmunition
+ * @see AbstractProduct
  */
-public interface IAmmunition {
+public interface IProduct {
 
     /**
      * Returns price.

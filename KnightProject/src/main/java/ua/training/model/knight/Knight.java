@@ -1,6 +1,7 @@
 package ua.training.model.knight;
 
-import ua.training.model.knight.ammunition.*;
+import ua.training.model.ammunition.*;
+import ua.training.model.product.IProduct;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class Knight implements IAmmunitionCarrier {
     /**
      * Container of ammunition.
      */
-    private Map<String, IAmmunition> ammunition = new HashMap<>();
+    private Map<String, IProduct> ammunition = new HashMap<>();
 
     /**
      * Constructor with package-private access.
@@ -34,7 +35,7 @@ public class Knight implements IAmmunitionCarrier {
     public int getAmmunitionCost() {
         int cost = ammunition.values()
                 .stream()
-                .mapToInt(IAmmunition::getPrice)
+                .mapToInt(IProduct::getPrice)
                 .reduce((s1, s2) -> (s1 + s2))
                 .orElse(0);
         return cost;
@@ -44,8 +45,8 @@ public class Knight implements IAmmunitionCarrier {
      * Sorts container elements by weight in ascending order.
      * @return list, which sorted by weight in ascending order
      */
-    public List<IAmmunition> sortAmmunitionByWeight() {
-        List<IAmmunition> list = ammunition.values()
+    public List<IProduct> sortAmmunitionByWeight() {
+        List<IProduct> list = ammunition.values()
                 .stream()
                 .sorted((o1, o2)
                         -> (o1.getWeight() == o2.getWeight())
@@ -62,8 +63,8 @@ public class Knight implements IAmmunitionCarrier {
      * @param maxBarrier maximum barrier of range
      * @return list with elements, which are within the range of price
      */
-    public List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier) {
-        List<IAmmunition> list = ammunition.values()
+    public List<IProduct> findInPriceRange(int minBarrier, int maxBarrier) {
+        List<IProduct> list = ammunition.values()
                 .stream()
                 .filter(item -> (item.getPrice() < maxBarrier)
                         && (item.getPrice() > minBarrier))

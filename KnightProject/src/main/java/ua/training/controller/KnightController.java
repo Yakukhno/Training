@@ -1,8 +1,8 @@
 package ua.training.controller;
 
-import ua.training.model.knight.ammunition.ChainArmor;
-import ua.training.model.knight.ammunition.Shield;
-import ua.training.model.knight.ammunition.Weapon;
+import ua.training.model.ammunition.ChainArmor;
+import ua.training.model.ammunition.Shield;
+import ua.training.model.ammunition.Weapon;
 import ua.training.model.knight.AbstractKnightBuilder;
 import ua.training.model.knight.Knight;
 import ua.training.view.View;
@@ -71,17 +71,21 @@ public class KnightController {
 
         knight = knightBuilder.build();
 
-        view.showMessage(View.SORTED_MESSAGE,
-                knight.sortAmmunitionByWeight());
+        view.showMessage(View.COST_MESSAGE, knight.getAmmunitionCost());
 
-        view.showMessage(View.RANGE_MESSAGE);
-        view.showMessage(View.MIN_BARRIER_MESSAGE);
-        int minBarrier = readUserInput(scanner, Integer.MAX_VALUE);
-        view.showMessage(View.MAX_BARRIER_MESSAGE);
-        int maxBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+        if (knight.getAmmunitionCost() != 0) {
+            view.showMessage(View.SORTED_MESSAGE,
+                    knight.sortAmmunitionByWeight());
 
-        view.showMessage(View.RANGE_RESULT_MESSAGE,
-                knight.findInPriceRange(minBarrier, maxBarrier));
+            view.showMessage(View.RANGE_MESSAGE);
+            view.showMessage(View.MIN_BARRIER_MESSAGE);
+            int minBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+            view.showMessage(View.MAX_BARRIER_MESSAGE);
+            int maxBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+
+            view.showMessage(View.RANGE_RESULT_MESSAGE,
+                    knight.findInPriceRange(minBarrier, maxBarrier));
+        }
     }
 
     /**

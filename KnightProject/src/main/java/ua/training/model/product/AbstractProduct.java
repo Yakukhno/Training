@@ -1,14 +1,16 @@
-package ua.training.model.knight.ammunition;
+package ua.training.model.product;
 
+
+import ua.training.model.product.IProduct;
 
 /**
- * This class provides a skeletal implementation of the {@link IAmmunition}
+ * This class provides a skeletal implementation of the {@link IProduct}
  * interface to minimize the effort required to implement this interface.
  *
- * @see IAmmunition
+ * @see IProduct
  * @author Ivan Yakukhno
  */
-public abstract class AbstractAmmunition implements IAmmunition {
+public abstract class AbstractProduct implements IProduct {
 
     /**
      * Price of ammunition.
@@ -25,7 +27,7 @@ public abstract class AbstractAmmunition implements IAmmunition {
      * @param price int value of price of a ammunition
      * @param weight int value of weight of a ammunition
      */
-    protected AbstractAmmunition(int price, int weight) {
+    protected AbstractProduct(int price, int weight) {
         this.price = price;
         this.weight = weight;
     }

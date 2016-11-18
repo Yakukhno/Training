@@ -1,10 +1,12 @@
-package ua.training.model.knight.ammunition;
+package ua.training.model.ammunition;
+
+import ua.training.model.product.AbstractProduct;
 
 /**
- * Implementation of <tt>AbstractAmmunition</tt> abstract class.
+ * Implementation of <tt>AbstractProduct</tt> abstract class.
  * Describes helmet.
  */
-public class Helmet extends AbstractAmmunition {
+public class Helmet extends AbstractProduct {
 
     /**
      * Boolean value whether is protected helmet or not.

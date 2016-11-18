@@ -2,10 +2,10 @@ package ua.training;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.training.model.knight.ammunition.*;
-import ua.training.model.knight.IAmmunitionCarrier;
-import ua.training.model.knight.Knight;
+import ua.training.model.ammunition.*;
+import ua.training.model.ammunition.IAmmunitionCarrier;
 import ua.training.model.knight.KnightBuilder;
+import ua.training.model.product.IProduct;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class KnightTest {
 
     @Test
     public void testSortByWeight() {
-        List<IAmmunition> ammunitionList = knight.sortAmmunitionByWeight();
+        List<IProduct> ammunitionList = knight.sortAmmunitionByWeight();
 
         boolean isSorted = true;
         for (int i = 0; i < ammunitionList.size() - 1; i++) {
@@ -54,7 +54,7 @@ public class KnightTest {
     public void testFindInPriceRange() {
         int minBarrier = 30;
         int maxBarrier = 220;
-        List<IAmmunition> ammunitionList = knight.findInPriceRange(minBarrier, maxBarrier);
+        List<IProduct> ammunitionList = knight.findInPriceRange(minBarrier, maxBarrier);
 
         boolean isIncorrectSearch = ammunitionList
                 .stream()

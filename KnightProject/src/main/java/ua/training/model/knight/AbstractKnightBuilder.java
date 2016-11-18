@@ -1,8 +1,8 @@
 package ua.training.model.knight;
 
-import ua.training.model.knight.ammunition.ChainArmor;
-import ua.training.model.knight.ammunition.Shield;
-import ua.training.model.knight.ammunition.Weapon;
+import ua.training.model.ammunition.ChainArmor;
+import ua.training.model.ammunition.Shield;
+import ua.training.model.ammunition.Weapon;
 
 /**
  * This class provides methods to build object of {@link Knight} class.

@@ -1,14 +1,11 @@
 package ua.training.model.knight;
 
 import ua.training.database.Price;
-import ua.training.model.knight.ammunition.ChainArmor;
-import ua.training.model.knight.ammunition.ChainArmor.ChainArmorMaterial;
-import ua.training.model.knight.ammunition.Helmet;
-import ua.training.model.knight.ammunition.Shield;
-import ua.training.model.knight.ammunition.Weapon;
+import ua.training.model.ammunition.*;
+import ua.training.model.ammunition.ChainArmor.ChainArmorMaterial;
 
-import static ua.training.model.knight.ammunition.ChainArmor.ChainArmorMaterial.*;
-import static ua.training.model.knight.ammunition.Weapon.WeaponType.*;
+import static ua.training.model.ammunition.ChainArmor.ChainArmorMaterial.*;
+import static ua.training.model.ammunition.Weapon.WeaponType.*;
 
 /**
  * Implementation of <tt>AbstractKnightBuilder</tt> abstract class.

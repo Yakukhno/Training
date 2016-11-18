@@ -1,6 +1,7 @@
-package ua.training.model.knight;
+package ua.training.model.ammunition;
 
-import ua.training.model.knight.ammunition.*;
+import ua.training.model.ammunition.*;
+import ua.training.model.product.IProduct;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public interface IAmmunitionCarrier {
      * Sorts ammunition elements by weight in ascending order.
      * @return list, which sorted by weight in ascending order
      */
-    List<IAmmunition> sortAmmunitionByWeight();
+    List<IProduct> sortAmmunitionByWeight();
 
     /**
      * Searches ammunition elements, which are within the range of price.
@@ -55,6 +56,6 @@ public interface IAmmunitionCarrier {
      * @param maxBarrier maximum barrier of range
      * @return list with elements, which are within the range of price
      */
-    List<IAmmunition> findInPriceRange(int minBarrier, int maxBarrier);
+    List<IProduct> findInPriceRange(int minBarrier, int maxBarrier);
 
 }
