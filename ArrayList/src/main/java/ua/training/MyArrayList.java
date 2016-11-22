@@ -7,8 +7,9 @@ public class MyArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private int size;
-
     private Object[] data;
+
+    private int modCount;
 
     public MyArrayList() {
         data = new Object[DEFAULT_CAPACITY];
@@ -77,6 +78,7 @@ public class MyArrayList<E> implements List<E> {
     public boolean add(E e) {
         checkCapacity();
         data[size++] = e;
+        modCount++;
         return true;
     }
 
@@ -85,6 +87,7 @@ public class MyArrayList<E> implements List<E> {
             if (data[i].equals(o)) {
                 System.arraycopy(data, i + 1, data, i, size - i - 1);
                 data[--size] = null;
+                modCount++;
                 return true;
             }
         }
@@ -138,6 +141,7 @@ public class MyArrayList<E> implements List<E> {
         System.arraycopy(data, index, data, index + 1, size - index);
         data[index] = element;
         size++;
+        modCount++;
     }
 
     public E remove(int index) {
@@ -145,6 +149,7 @@ public class MyArrayList<E> implements List<E> {
         E oldElement = (E) data[index];
         System.arraycopy(data, index + 1, data, index, size - index - 1);
         data[--size] = null;
+        modCount++;
         return oldElement;
     }
 
@@ -154,7 +159,12 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public int indexOf(Object o) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if (o.equals(data[i])) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public int lastIndexOf(Object o) {
@@ -166,10 +176,12 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public ListIterator<E> listIterator(final int index) {
-        checkOutOfBounds(index);
+        if (index != size) {
+            checkOutOfBounds(index);
+        }
         return new ListIterator<E>() {
             private int currentIndex = index;
-            private int iteratorSize = size;
+            private int initialMod = modCount;
 
             @Override
             public boolean hasNext() {
@@ -178,6 +190,7 @@ public class MyArrayList<E> implements List<E> {
 
             @Override
             public E next() {
+                checkForComodification();
                 if (hasNext()) {
                     return (E) data[currentIndex++];
                 } else {
@@ -192,6 +205,7 @@ public class MyArrayList<E> implements List<E> {
 
             @Override
             public E previous() {
+                checkForComodification();
                 if (hasPrevious()) {
                     return (E) data[--currentIndex];
                 } else {
@@ -211,13 +225,10 @@ public class MyArrayList<E> implements List<E> {
 
             @Override
             public void remove() {
-                if (!isSizeChanged()) {
-                    MyArrayList.this.remove(currentIndex - 1);
-                    iteratorSize--;
-                    currentIndex--;
-                } else {
-                    throw new ConcurrentModificationException();
-                }
+                checkForComodification();
+                MyArrayList.this.remove(currentIndex - 1);
+                modCount--;
+                currentIndex--;
             }
 
             @Override
@@ -227,17 +238,15 @@ public class MyArrayList<E> implements List<E> {
 
             @Override
             public void add(E e) {
-                if (!isSizeChanged()) {
-                    MyArrayList.this.add(currentIndex, e);
-                    iteratorSize++;
-                    currentIndex++;
-                } else {
-                    throw new ConcurrentModificationException();
-                }
+                checkForComodification();
+                MyArrayList.this.add(currentIndex, e);
+                modCount--;
+                currentIndex++;
             }
 
-            private boolean isSizeChanged() {
-                return size != iteratorSize;
+            private void checkForComodification() {
+                if (modCount != initialMod)
+                    throw new ConcurrentModificationException();
             }
         };
     }
