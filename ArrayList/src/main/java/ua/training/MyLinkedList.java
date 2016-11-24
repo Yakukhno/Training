@@ -2,13 +2,20 @@ package ua.training;
 
 import java.util.*;
 
-public class MyLinkedList<T> implements List<T> {
+public class MyLinkedList<T> implements List<T>, Deque<T> {
 
     private int size;
     private Node<T> first;
     private Node<T> last;
 
     private int modCount;
+
+    public MyLinkedList(){}
+
+    public MyLinkedList(Collection<? extends T> collection) {
+        this();
+        addAll(collection);
+    }
 
     @Override
     public int size() {
@@ -22,7 +29,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o) != -1;
     }
 
     @Override
@@ -42,10 +49,11 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
+        Node<T> newNode = new Node<>(t);
         if (first == null) {
-            first = last = new Node<>(t, null, null);
+            first = last = newNode;
         } else {
-            Node<T> newNode = new Node<>(t, last, null);
+            newNode.previous = last;
             last.next = newNode;
             last = newNode;
         }
@@ -72,7 +80,9 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        Objects.requireNonNull(c);
+        c.forEach(this::add);
+        return true;
     }
 
     @Override
@@ -93,6 +103,7 @@ public class MyLinkedList<T> implements List<T> {
     @Override
     public void clear() {
         first = null;
+        last = null;
         size = 0;
     }
 
@@ -137,15 +148,19 @@ public class MyLinkedList<T> implements List<T> {
     public T remove(int index) {
         checkOutOfBounds(index);
         Node<T> nodeToRemove = getNode(index);
-        if (nodeToRemove.equals(first)) {
-            nodeToRemove.next.previous = null;
-            first = nodeToRemove.next;
-        } else if(nodeToRemove.equals(last)) {
-            nodeToRemove.previous.next = null;
-            last = nodeToRemove.previous;
+        if (size != 1) {
+            if (nodeToRemove.equals(first)) {
+                first = nodeToRemove.next;
+                first.previous = null;
+            } else if (nodeToRemove.equals(last)) {
+                last = nodeToRemove.previous;
+                last.next = null;
+            } else {
+                nodeToRemove.previous.next = nodeToRemove.next;
+                nodeToRemove.next.previous = nodeToRemove.previous;
+            }
         } else {
-            nodeToRemove.previous.next = nodeToRemove.next;
-            nodeToRemove.next.previous = nodeToRemove.previous;
+            first = last = null;
         }
         size--;
         modCount++;
@@ -155,11 +170,19 @@ public class MyLinkedList<T> implements List<T> {
     @Override
     public int indexOf(Object o) {
         Node<T> node = first;
-        for (int i = 0; i < size; i++) {
-            if (node.item.equals(o)) {
-                return i;
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                if (o != null) {
+                    if (node.item.equals(o)) {
+                        return i;
+                    }
+                } else {
+                    if (node.item == null) {
+                        return i;
+                    }
+                }
+                node = node.next;
             }
-            node = node.next;
         }
         return -1;
     }
@@ -287,23 +310,154 @@ public class MyLinkedList<T> implements List<T> {
         return null;
     }
 
-    private class Node<T> {
-        T item;
-        Node<T> previous;
-        Node<T> next;
-
-        Node(T item, Node<T> previous, Node<T> next) {
-            this.item = item;
-            this.previous = previous;
-            this.next = next;
+    @Override
+    public void addFirst(T t) {
+        Node<T> newNode = new Node<>(t);
+        if (first == null) {
+            first = last = newNode;
+        } else {
+            newNode.next = first;
+            first.previous = newNode;
+            first = newNode;
         }
+        size++;
+        modCount++;
+    }
+
+    @Override
+    public void addLast(T t) {
+        add(t);
+    }
+
+    @Override
+    public boolean offerFirst(T t) {
+        return false;
+    }
+
+    @Override
+    public boolean offerLast(T t) {
+        return false;
+    }
+
+    @Override
+    public T removeFirst() {
+        T removedElement = pollFirst();
+        checkNullPointer();
+        return removedElement;
+    }
+
+    @Override
+    public T removeLast() {
+        T removedElement = pollLast();
+        checkNullPointer();
+        return removedElement;
+    }
+
+    @Override
+    public T pollFirst() {
+        if (size != 0) {
+            T removedItem = first.item;
+            first.next.previous = null;
+            first = first.next;
+            size--;
+            modCount++;
+            return removedItem;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public T pollLast() {
+        if (size != 0) {
+            T removedItem = last.item;
+            last.previous.next = null;
+            last = last.previous;
+            size--;
+            modCount++;
+            return removedItem;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public T getFirst() {
+        checkNullPointer();
+        return first.item;
+    }
+
+    @Override
+    public T getLast() {
+        checkNullPointer();
+        return last.item;
+    }
+
+    @Override
+    public T peekFirst() {
+        return (first != null) ? first.item : null;
+    }
+
+    @Override
+    public T peekLast() {
+        return (last != null) ? last.item : null;
+    }
+
+    @Override
+    public boolean removeFirstOccurrence(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean removeLastOccurrence(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean offer(T t) {
+        return false;
+    }
+
+    @Override
+    public T remove() {
+        return removeFirst();
+    }
+
+    @Override
+    public T poll() {
+        return pollFirst();
+    }
+
+    @Override
+    public T element() {
+        return getFirst();
+    }
+
+    @Override
+    public T peek() {
+        return peekFirst();
+    }
+
+    @Override
+    public void push(T t) {
+        addFirst(t);
+    }
+
+    @Override
+    public T pop() {
+        return removeFirst();
+    }
+
+    @Override
+    public Iterator<T> descendingIterator() {
+        return null;
     }
 
     private Node<T> getNode(int index) {
         Node<T> node;
         if (index < size / 2) {
             node = first;
-            for (int i = 0; i < size / 2; i++) {
+            for (int i = 0; i <= index; i++) {
                 if (i == index) {
                     return node;
                 }
@@ -311,7 +465,7 @@ public class MyLinkedList<T> implements List<T> {
             }
         } else if (index < size){
             node = last;
-            for (int i = size - 1; i >= size / 2; i--) {
+            for (int i = size - 1; i >= index; i--) {
                 if (i == index) {
                     return node;
                 }
@@ -325,6 +479,28 @@ public class MyLinkedList<T> implements List<T> {
         if ((index < 0) || (index > size - 1)) {
             throw new ArrayIndexOutOfBoundsException("index = " + index
                     + " size = " + size);
+        }
+    }
+
+    private void checkNullPointer() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+    }
+
+    private class Node<T> {
+        T item;
+        Node<T> previous;
+        Node<T> next;
+
+        Node(T item) {
+            this.item = item;
+        }
+
+        Node(T item, Node<T> previous, Node<T> next) {
+            this.item = item;
+            this.previous = previous;
+            this.next = next;
         }
     }
 
