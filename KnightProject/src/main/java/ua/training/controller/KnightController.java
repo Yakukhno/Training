@@ -32,13 +32,21 @@ public class KnightController {
     private AbstractKnightBuilder knightBuilder;
 
     /**
+     * Scanner to handle user input
+     */
+    private Scanner scanner;
+
+    /**
      * Constructor with knightBuilder, view params.
      * @param knightBuilder builder for knight object
      * @param view view
+     * @param scanner source of user input
      */
-    public KnightController(AbstractKnightBuilder knightBuilder, View view) {
+    public KnightController(AbstractKnightBuilder knightBuilder, View view,
+                            Scanner scanner) {
         this.knightBuilder = knightBuilder;
         this.view = view;
+        this.scanner = scanner;
     }
 
     /**
@@ -47,27 +55,12 @@ public class KnightController {
      * and builds final version of knight.
      */
     public void execute() {
-        Scanner scanner = new Scanner(System.in);
-
         view.showMessage(View.WELCOME_MESSAGE);
-        view.showMessage(View.CHAIN_ARMOR_MESSAGE);
-        chooseChainArmor(readUserInput(
-                scanner, ChainArmor.ChainArmorMaterial.values().length));
 
-        view.showMessage(View.HELMET_MESSAGE);
-        chooseHelmet(readUserInput(scanner, 2));
-
-        view.showMessage(View.SHIELD_MATERIAL_MESSAGE);
-        int shieldMaterialCode = readUserInput(scanner,
-                Shield.ShieldMaterial.values().length);
-        if (shieldMaterialCode != 0) {
-            view.showMessage(View.SHIELD_SHAPE_MESSAGE);
-            chooseShield(shieldMaterialCode, readUserInput(scanner,
-                    Shield.Shape.values().length));
-        }
-
-        view.showMessage(View.WEAPON_MESSAGE);
-        chooseWeapon(readUserInput(scanner, Weapon.WeaponType.values().length));
+        handleChainArmorInput();
+        handleHelmetInput();
+        handleShieldInput();
+        handleWeaponInput();
 
         knight = knightBuilder.build();
 
@@ -75,16 +68,8 @@ public class KnightController {
 
         if (knight.getAmmunitionCost() != 0) {
             view.showMessage(View.SORTED_MESSAGE,
-                    knight.sortAmmunitionByWeight());
-
-            view.showMessage(View.RANGE_MESSAGE);
-            view.showMessage(View.MIN_BARRIER_MESSAGE);
-            int minBarrier = readUserInput(scanner, Integer.MAX_VALUE);
-            view.showMessage(View.MAX_BARRIER_MESSAGE);
-            int maxBarrier = readUserInput(scanner, Integer.MAX_VALUE);
-
-            view.showMessage(View.RANGE_RESULT_MESSAGE,
-                    knight.findInPriceRange(minBarrier, maxBarrier));
+                    knight.sort(knight.weightAscComparator()));
+            handlePriceRangeInput();
         }
     }
 
@@ -111,6 +96,61 @@ public class KnightController {
     }
 
     /**
+     * Shows message about chain armor and handle user input
+     */
+    private void handleChainArmorInput() {
+        view.showMessage(View.CHAIN_ARMOR_MESSAGE);
+        chooseChainArmor(readUserInput(
+                scanner, ChainArmor.ChainArmorMaterial.values().length));
+    }
+
+    /**
+     * Shows message about helmet and handle user input
+     */
+    private void handleHelmetInput() {
+        view.showMessage(View.HELMET_MESSAGE);
+        chooseHelmet(readUserInput(scanner, 2));
+    }
+
+    /**
+     * Shows message about shield and handle user input
+     */
+    private void handleShieldInput() {
+        view.showMessage(View.SHIELD_MATERIAL_MESSAGE);
+        int shieldMaterialCode = readUserInput(scanner,
+                Shield.ShieldMaterial.values().length);
+        if (shieldMaterialCode != 0) {
+            view.showMessage(View.SHIELD_SHAPE_MESSAGE);
+            chooseShield(shieldMaterialCode, readUserInput(scanner,
+                    Shield.Shape.values().length));
+        }
+    }
+
+    /**
+     * Shows message about weapon and handle user input
+     */
+    private void handleWeaponInput() {
+        view.showMessage(View.WEAPON_MESSAGE);
+        chooseWeapon(readUserInput(scanner, Weapon.WeaponType.values().length));
+    }
+
+    /**
+     * Shows message about searching in price range and handle user input
+     */
+    private void handlePriceRangeInput() {
+        view.showMessage(View.RANGE_MESSAGE);
+        view.showMessage(View.MIN_BARRIER_MESSAGE);
+        int minBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+        view.showMessage(View.MAX_BARRIER_MESSAGE);
+        int maxBarrier = readUserInput(scanner, Integer.MAX_VALUE);
+
+        view.showMessage(View.RANGE_RESULT_MESSAGE,
+                knight.findAmmunition(knight
+                        .ammunitionInPriceRangePredicate(
+                                minBarrier, maxBarrier)));
+    }
+
+    /**
      * Chooses correct parameter for builder method, which builds chain armor,
      * in accordance with user input code.
      * @param code user input code
@@ -119,27 +159,15 @@ public class KnightController {
      * switch construction
      */
     private void chooseChainArmor(int code) {
-        switch (code) {
-            case 1 :
-                knightBuilder.buildChainArmor(
-                        ChainArmor.ChainArmorMaterial.ALUMINUM);
-                break;
-            case 2 :
-                knightBuilder.buildChainArmor(
-                        ChainArmor.ChainArmorMaterial.COPPER);
-                break;
-            case 3 :
-                knightBuilder.buildChainArmor(
-                        ChainArmor.ChainArmorMaterial.STEAL);
-                break;
-            case 4 :
-                knightBuilder.buildChainArmor(
-                        ChainArmor.ChainArmorMaterial.LEATHER);
-                break;
-            case 0 :
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal code");
+        for (ChainArmor.ChainArmorMaterial material
+                : ChainArmor.ChainArmorMaterial.values()) {
+            if (material.getIndex() == code) {
+                knightBuilder.buildChainArmor(material);
+                return;
+            }
+        }
+        if (code != 0) {
+            throw new IllegalArgumentException("Illegal code");
         }
     }
 
@@ -152,17 +180,15 @@ public class KnightController {
      * switch construction
      */
     private void chooseHelmet(int code) {
-        switch (code) {
-            case 1 :
-                knightBuilder.buildHelmet(true);
-                break;
-            case 2 :
-                knightBuilder.buildHelmet(false);
-                break;
-            case 0 :
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal code");
+        for (HelmetProtection protection
+                : HelmetProtection.values()) {
+            if (protection.getIndex() == code) {
+                knightBuilder.buildHelmet(protection.isProtected());
+                return;
+            }
+        }
+        if (code != 0) {
+            throw new IllegalArgumentException("Illegal code");
         }
     }
 
@@ -177,34 +203,19 @@ public class KnightController {
      */
     private void chooseShield(int codeOfMaterial, int codeOfShape) {
         Shield.ShieldMaterial material = null;
-        switch (codeOfMaterial) {
-            case 1 :
-                material = Shield.ShieldMaterial.COPPER;
-                break;
-            case 2 :
-                material = Shield.ShieldMaterial.STEAL;
-                break;
-            case 3 :
-                material = Shield.ShieldMaterial.WOOD;
-                break;
-            case 0 :
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal code");
+        for (Shield.ShieldMaterial item : Shield.ShieldMaterial.values()) {
+            if (item.getIndex() == codeOfMaterial) {
+                material = item;
+            }
         }
-
-        switch (codeOfShape) {
-            case 1 :
-                knightBuilder.buildShield(material, Shield.Shape.ROUND);
-                break;
-            case 2 :
-                knightBuilder.buildShield(material, Shield.Shape.OVAL);
-                break;
-            case 3 :
-                knightBuilder.buildShield(material, Shield.Shape.SQUARE);
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal code");
+        for (Shield.Shape item : Shield.Shape.values()) {
+            if (item.getIndex() == codeOfShape) {
+                knightBuilder.buildShield(material, item);
+                return;
+            }
+        }
+        if (codeOfMaterial != 0) {
+            throw new IllegalArgumentException("Illegal code");
         }
     }
 
@@ -217,23 +228,35 @@ public class KnightController {
      * switch construction
      */
     private void chooseWeapon(int code) {
-        switch (code) {
-            case 1 :
-                knightBuilder.buildWeapon(Weapon.WeaponType.SWORD);
-                break;
-            case 2 :
-                knightBuilder.buildWeapon(Weapon.WeaponType.SPEAR);
-                break;
-            case 3 :
-                knightBuilder.buildWeapon(Weapon.WeaponType.CROSSBOW);
-                break;
-            case 4 :
-                knightBuilder.buildWeapon(Weapon.WeaponType.MACE);
-                break;
-            case 0 :
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal code");
+        for (Weapon.WeaponType weaponType
+                : Weapon.WeaponType.values()) {
+            if (weaponType.getIndex() == code) {
+                knightBuilder.buildWeapon(weaponType);
+                return;
+            }
+        }
+        if (code != 0) {
+            throw new IllegalArgumentException("Illegal code");
+        }
+    }
+
+    private enum HelmetProtection {
+        PROTECTED(1, false), UNPROTECTED(2, true);
+
+        private int index;
+        private boolean value;
+
+        HelmetProtection(int index, boolean value) {
+            this.index = index;
+            this.value = value;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public boolean isProtected() {
+            return value;
         }
     }
 

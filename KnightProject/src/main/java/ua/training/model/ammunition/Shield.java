@@ -19,20 +19,6 @@ public class Shield extends AbstractProduct {
     private Shape shape;
 
     /**
-     * Enumeration of shield materials.
-     */
-    public enum ShieldMaterial {
-        COPPER, STEAL, WOOD
-    }
-
-    /**
-     * Enumeration of shield shape.
-     */
-    public enum Shape {
-        ROUND, OVAL, SQUARE
-    }
-
-    /**
      * Constructor of shield with price, weight, material, shape params.
      * @param price int value of price of shield
      * @param weight int value of weight of shield
@@ -61,5 +47,39 @@ public class Shield extends AbstractProduct {
 
     public void setShape(Shape shape) {
         this.shape = shape;
+    }
+
+    /**
+     * Enumeration of shield materials.
+     */
+    public enum ShieldMaterial {
+        COPPER(1), STEAL(2), WOOD(3);
+
+        private int index;
+
+        ShieldMaterial(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+    }
+
+    /**
+     * Enumeration of shield shape.
+     */
+    public enum Shape {
+        ROUND(1), OVAL(2), SQUARE(3);
+
+        private int index;
+
+        Shape(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
     }
 }

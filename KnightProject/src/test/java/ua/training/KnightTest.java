@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.training.model.ammunition.*;
 import ua.training.model.ammunition.IAmmunitionCarrier;
+import ua.training.model.knight.Knight;
 import ua.training.model.knight.KnightBuilder;
 import ua.training.model.product.IProduct;
 
@@ -37,7 +38,7 @@ public class KnightTest {
 
     @Test
     public void testSortByWeight() {
-        List<IProduct> ammunitionList = knight.sortAmmunitionByWeight();
+        List<IProduct> ammunitionList = knight.sort(knight.weightAscComparator());
 
         boolean isSorted = true;
         for (int i = 0; i < ammunitionList.size() - 1; i++) {
@@ -54,7 +55,8 @@ public class KnightTest {
     public void testFindInPriceRange() {
         int minBarrier = 30;
         int maxBarrier = 220;
-        List<IProduct> ammunitionList = knight.findInPriceRange(minBarrier, maxBarrier);
+        List<IProduct> ammunitionList = knight.findAmmunition(
+                knight.ammunitionInPriceRangePredicate(minBarrier, maxBarrier));
 
         boolean isIncorrectSearch = ammunitionList
                 .stream()

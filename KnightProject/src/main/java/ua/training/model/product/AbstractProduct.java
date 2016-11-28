@@ -1,8 +1,5 @@
 package ua.training.model.product;
 
-
-import ua.training.model.product.IProduct;
-
 /**
  * This class provides a skeletal implementation of the {@link IProduct}
  * interface to minimize the effort required to implement this interface.

@@ -1,9 +1,10 @@
 package ua.training.model.ammunition;
 
-import ua.training.model.ammunition.*;
 import ua.training.model.product.IProduct;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Interface describes behaviour of some entity, which can operate with
@@ -44,18 +45,21 @@ public interface IAmmunitionCarrier {
     int getAmmunitionCost();
 
     /**
-     * Sorts ammunition elements by weight in ascending order.
-     * @return list, which sorted by weight in ascending order
+     * Sorts ammunition elements using comparator.
+     * @param comparator sort comparator
+     * @return sorted list
      */
-    List<IProduct> sortAmmunitionByWeight();
+    List<IProduct> sort(Comparator<IProduct> comparator);
 
     /**
-     * Searches ammunition elements, which are within the range of price.
-     * Barriers of range transmitted in parameters.
-     * @param minBarrier minimum barrier of range
-     * @param maxBarrier maximum barrier of range
-     * @return list with elements, which are within the range of price
+     * Searches ammunition elements using predicate.
+     * @param predicate condition of searching
+     * @return list with elements, which satisfies condition
      */
-    List<IProduct> findInPriceRange(int minBarrier, int maxBarrier);
+    List<IProduct> findAmmunition(Predicate<IProduct> predicate);
 
+    Comparator<IProduct> weightAscComparator();
+
+    Predicate<IProduct> ammunitionInPriceRangePredicate(int minBarrier,
+                                                        int maxBarrier);
 }

@@ -14,13 +14,6 @@ public class Weapon extends AbstractProduct {
     private WeaponType type;
 
     /**
-     * Enumeration of weapon type.
-     */
-    public enum WeaponType {
-        SWORD, SPEAR, CROSSBOW, MACE
-    }
-
-    /**
      * Constructor of weapon with price, weight, type params.
      * @param price int value of price of weapon
      * @param weight int value of weight of weapon
@@ -39,5 +32,22 @@ public class Weapon extends AbstractProduct {
 
     public void setType(WeaponType damage) {
         this.type = damage;
+    }
+
+    /**
+     * Enumeration of weapon type.
+     */
+    public enum WeaponType {
+        SWORD(1), SPEAR(2), CROSSBOW(3), MACE(4);
+
+        private int index;
+
+        WeaponType(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
     }
 }

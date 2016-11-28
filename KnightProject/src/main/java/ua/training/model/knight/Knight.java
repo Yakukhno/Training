@@ -4,6 +4,7 @@ import ua.training.model.ammunition.*;
 import ua.training.model.product.IProduct;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +22,7 @@ public class Knight implements IAmmunitionCarrier {
     /**
      * Container of ammunition.
      */
-    private Map<String, IProduct> ammunition = new HashMap<>();
+    private Map<AmmunitionEnum, IProduct> ammunition = new HashMap<>();
 
     /**
      * Constructor with package-private access.
@@ -33,76 +34,84 @@ public class Knight implements IAmmunitionCarrier {
      * @return total cost of ammunition in container
      */
     public int getAmmunitionCost() {
-        int cost = ammunition.values()
+        return ammunition.values()
                 .stream()
                 .mapToInt(IProduct::getPrice)
                 .reduce((s1, s2) -> (s1 + s2))
                 .orElse(0);
-        return cost;
     }
 
     /**
-     * Sorts container elements by weight in ascending order.
-     * @return list, which sorted by weight in ascending order
+     * Sorts ammunition elements using comparator.
+     * @param comparator sort comparator
+     * @return sorted list
      */
-    public List<IProduct> sortAmmunitionByWeight() {
-        List<IProduct> list = ammunition.values()
+    public List<IProduct> sort(Comparator<IProduct> comparator) {
+        return ammunition.values()
                 .stream()
-                .sorted((o1, o2)
-                        -> (o1.getWeight() == o2.getWeight())
-                        ? 0
-                        : (o1.getWeight() > o2.getWeight()) ? 1 : -1)
+                .sorted(comparator)
                 .collect(Collectors.toList());
-        return list;
     }
 
     /**
-     * Searches elements in container, which are within the range of price.
-     * Barriers of range transmitted in parameters.
-     * @param minBarrier minimum barrier of range
-     * @param maxBarrier maximum barrier of range
-     * @return list with elements, which are within the range of price
+     * Searches ammunition elements using predicate.
+     * @param predicate condition of searching
+     * @return list with elements, which satisfies condition
      */
-    public List<IProduct> findInPriceRange(int minBarrier, int maxBarrier) {
-        List<IProduct> list = ammunition.values()
+    public List<IProduct> findAmmunition(Predicate<IProduct> predicate) {
+        return ammunition.values()
                 .stream()
-                .filter(item -> (item.getPrice() < maxBarrier)
-                        && (item.getPrice() > minBarrier))
+                .filter(predicate)
                 .collect(Collectors.toList());
-        return list;
+    }
+
+    public Comparator<IProduct> weightAscComparator() {
+        return (o1, o2) -> (o1.getWeight() == o2.getWeight())
+                ? 0
+                : (o1.getWeight() > o2.getWeight()) ? 1 : -1;
+    }
+
+    public Predicate<IProduct> ammunitionInPriceRangePredicate(
+            int minBarrier, int maxBarrier) {
+        return item -> (item.getPrice() < maxBarrier)
+                && (item.getPrice() > minBarrier);
     }
 
     //getters & setters
 
     public ChainArmor getChainArmor() {
-        return (ChainArmor) ammunition.get("chainArmor");
+        return (ChainArmor) ammunition.get(AmmunitionEnum.CHAIN_ARMOR);
     }
 
     void setChainArmor(ChainArmor chainArmor) {
-        ammunition.put("chainArmor", chainArmor);
+        ammunition.put(AmmunitionEnum.CHAIN_ARMOR, chainArmor);
     }
 
     public Helmet getHelmet() {
-        return (Helmet) ammunition.get("helmet");
+        return (Helmet) ammunition.get(AmmunitionEnum.HELMET);
     }
 
     void setHelmet(Helmet helmet) {
-        ammunition.put("helmet", helmet);
+        ammunition.put(AmmunitionEnum.HELMET, helmet);
     }
 
     public Shield getShield() {
-        return (Shield) ammunition.get("shield");
+        return (Shield) ammunition.get(AmmunitionEnum.SHIELD);
     }
 
     void setShield(Shield shield) {
-        ammunition.put("shield", shield);
+        ammunition.put(AmmunitionEnum.SHIELD, shield);
     }
 
     public Weapon getWeapon() {
-        return (Weapon) ammunition.get("weapon");
+        return (Weapon) ammunition.get(AmmunitionEnum.WEAPON);
     }
 
     void setWeapon(Weapon weapon) {
-        ammunition.put("weapon", weapon);
+        ammunition.put(AmmunitionEnum.WEAPON, weapon);
+    }
+
+    public enum AmmunitionEnum {
+        CHAIN_ARMOR, HELMET, SHIELD, WEAPON
     }
 }

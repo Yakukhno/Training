@@ -14,13 +14,6 @@ public class ChainArmor extends AbstractProduct {
     private ChainArmorMaterial material;
 
     /**
-     * Enumeration of chain armor materials.
-     */
-    public enum ChainArmorMaterial {
-        ALUMINUM, COPPER, STEAL, LEATHER
-    }
-
-    /**
      * Constructor of chain armor with price, weight, material params.
      * @param price int value of price of chain armor
      * @param weight int value of weight of chain armor
@@ -39,6 +32,23 @@ public class ChainArmor extends AbstractProduct {
 
     public void setMaterial(ChainArmorMaterial material) {
         this.material = material;
+    }
+
+    /**
+     * Enumeration of chain armor materials.
+     */
+    public enum ChainArmorMaterial {
+        ALUMINUM(1), COPPER(2), STEAL(3), LEATHER(4);
+
+        private int index;
+
+        ChainArmorMaterial(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
     }
 
 }
