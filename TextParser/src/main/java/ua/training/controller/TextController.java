@@ -1,6 +1,6 @@
 package ua.training.controller;
 
-import ua.training.model.IText;
+import ua.training.model.text.IText;
 import ua.training.view.IView;
 
 public class TextController {
@@ -14,6 +14,6 @@ public class TextController {
     }
 
     public void execute() {
-
+        text.parse();
     }
 }
