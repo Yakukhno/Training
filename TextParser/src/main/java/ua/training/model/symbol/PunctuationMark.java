@@ -1,7 +1,5 @@
 package ua.training.model.symbol;
 
-import ua.training.model.symbol.ISymbol;
-
 public class PunctuationMark implements ISymbol {
 
     private String mark;

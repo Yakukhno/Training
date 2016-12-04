@@ -1,7 +1,5 @@
 package ua.training.model.symbol;
 
-import ua.training.model.symbol.ISymbol;
-
 public class Digit implements ISymbol {
 
     private String digit;

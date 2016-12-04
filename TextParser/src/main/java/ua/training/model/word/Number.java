@@ -1,7 +1,7 @@
 package ua.training.model.word;
 
 import ua.training.model.IComponent;
-import ua.training.model.symbol.Letter;
+import ua.training.model.symbol.Digit;
 import ua.training.model.symbol.PunctuationMark;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Number implements IWord {
     }
 
     private void addDigit(String letter) {
-        components.add(new Letter(letter));
+        components.add(new Digit(letter));
     }
 
     private void addPunctuationMark(String mark) {
