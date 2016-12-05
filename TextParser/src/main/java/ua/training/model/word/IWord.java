@@ -2,7 +2,4 @@ package ua.training.model.word;
 
 import ua.training.model.IComponent;
 
-public interface IWord extends IComponent {
-
-    void parse();
-}
+public interface IWord extends IComponent {}

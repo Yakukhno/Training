@@ -26,7 +26,7 @@ public class Text implements IText {
             addSentence(matcher.group().trim());
         }
         for (IComponent component : components) {
-            System.out.println(component);
+//            System.out.println(component);
             component.parse();
         }
     }
@@ -35,5 +35,8 @@ public class Text implements IText {
         components.add(new Sentence(sentence));
     }
 
-
+    @Override
+    public List<IComponent> getComponents() {
+        return components;
+    }
 }

@@ -34,7 +34,7 @@ public class Word implements IWord {
             }
         }
         for (IComponent component : components) {
-            System.out.println("\t\t" + component);
+//            System.out.println("\t\t" + component);
             component.parse();
         }
     }
@@ -45,6 +45,26 @@ public class Word implements IWord {
 
     private void addPunctuationMark(String mark) {
         components.add(new PunctuationMark(mark));
+    }
+
+    @Override
+    public List<IComponent> getComponents() {
+        return components;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Word word1 = (Word) o;
+
+        return word != null ? word.equals(word1.word) : word1.word == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return word != null ? word.hashCode() : 0;
     }
 
     @Override

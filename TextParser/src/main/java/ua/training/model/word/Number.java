@@ -35,7 +35,7 @@ public class Number implements IWord {
             }
         }
         for (IComponent component : components) {
-            System.out.println("\t\t" + component);
+//            System.out.println("\t\t" + component);
             component.parse();
         }
     }
@@ -46,6 +46,11 @@ public class Number implements IWord {
 
     private void addPunctuationMark(String mark) {
         components.add(new PunctuationMark(mark));
+    }
+
+    @Override
+    public List<IComponent> getComponents() {
+        return components;
     }
 
     @Override

@@ -2,7 +2,4 @@ package ua.training.model.sentence;
 
 import ua.training.model.IComponent;
 
-public interface ISentence extends IComponent {
-
-    void parse();
-}
+public interface ISentence extends IComponent {}

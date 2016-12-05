@@ -1,23 +1,29 @@
 package ua.training.controller;
 
+import ua.training.model.parser.WordsParser;
 import ua.training.model.reader.IStringReader;
-import ua.training.model.text.IText;
-import ua.training.model.text.Text;
 import ua.training.view.IView;
 
 public class TextController {
 
-    private IText text;
     private IView view;
-    private IStringReader reader;
+    private IStringReader textReader;
+    private IStringReader wordsReader;
+    private WordsParser parser;
 
-    public TextController(IStringReader reader, IView view) {
-        this.reader = reader;
+    public TextController(IView view, IStringReader textReader,
+                          IStringReader wordsReader) {
         this.view = view;
+        this.textReader = textReader;
+        this.wordsReader = wordsReader;
     }
 
     public void execute() {
-        text = new Text(reader.getString());
-        text.parse();
+        parser = new WordsParser(textReader.getString(), wordsReader.getString());
+        parser.parse();
+        System.out.println(parser.getWordsOccurrencesInAllSentences());
+        System.out.println(parser.getWordsOccurrencesInEachSentence());
+        System.out.println(parser.sortWords(parser.wordsByOccurrencesComparator()
+                .reversed()));
     }
 }

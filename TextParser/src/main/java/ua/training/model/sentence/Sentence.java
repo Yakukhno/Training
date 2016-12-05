@@ -40,7 +40,7 @@ public class Sentence implements ISentence {
             }
         }
         for (IComponent component : components) {
-            System.out.println("\t" + component);
+//            System.out.println("\t" + component);
             component.parse();
         }
     }
@@ -55,6 +55,10 @@ public class Sentence implements ISentence {
 
     private void addNumber(String number) {
         components.add(new Number(number));
+    }
+
+    public List<IComponent> getComponents() {
+        return components;
     }
 
     @Override

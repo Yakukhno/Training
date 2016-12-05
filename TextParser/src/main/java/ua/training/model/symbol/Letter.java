@@ -1,5 +1,9 @@
 package ua.training.model.symbol;
 
+import ua.training.model.IComponent;
+
+import java.util.List;
+
 public class Letter implements ISymbol {
 
     private String letter;
@@ -9,8 +13,11 @@ public class Letter implements ISymbol {
     }
 
     @Override
-    public void parse() {
+    public void parse() {}
 
+    @Override
+    public List<IComponent> getComponents() {
+        return null;
     }
 
     @Override
