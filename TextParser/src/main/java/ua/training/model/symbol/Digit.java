@@ -1,29 +1,11 @@
 package ua.training.model.symbol;
 
-import ua.training.model.IComponent;
+import ua.training.model.AbstractLeaf;
 
-import java.util.List;
-
-public class Digit implements ISymbol {
-
-    private String digit;
+public class Digit extends AbstractLeaf implements ISymbol {
 
     public Digit(String digit) {
-        this.digit = digit;
+        super(digit);
     }
 
-    @Override
-    public void parse() {}
-
-    @Override
-    public List<IComponent> getComponents() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "Digit{" +
-                "digit='" + digit + '\'' +
-                '}';
-    }
 }

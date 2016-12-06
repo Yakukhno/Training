@@ -1,29 +1,11 @@
 package ua.training.model.symbol;
 
-import ua.training.model.IComponent;
+import ua.training.model.AbstractLeaf;
 
-import java.util.List;
-
-public class Letter implements ISymbol {
-
-    private String letter;
+public class Letter extends AbstractLeaf implements ISymbol {
 
     public Letter(String letter) {
-        this.letter = letter;
+        super(letter);
     }
 
-    @Override
-    public void parse() {}
-
-    @Override
-    public List<IComponent> getComponents() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "Letter{" +
-                "letter='" + letter + '\'' +
-                '}';
-    }
 }

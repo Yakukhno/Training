@@ -1,36 +1,33 @@
 package ua.training.model.parser;
 
 import ua.training.model.IComponent;
-import ua.training.model.sentence.ISentence;
 import ua.training.model.sentence.Sentence;
 import ua.training.model.text.IText;
 import ua.training.model.text.Text;
 
 import java.util.*;
 
-public class WordsParser implements IParser {
+public class WordsParserImpl implements IWordsParser {
 
     private IText text;
-    private String requiredWords;
 
     private Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
             = new HashMap<>();
     private Map<IComponent, Integer> wordsOccurrencesInAllSentences;
 
-    public WordsParser(String text, String requiredWords) {
+    public WordsParserImpl(String text, String requiredWords) {
         this.text = new Text(text);
-        this.requiredWords = requiredWords;
+        parseRequiredWords(requiredWords);
     }
 
     @Override
     public void parse() {
+        text.parse();
         countWordsInEachSentence();
         countWordsInAllSentences();
     }
 
     private void countWordsInEachSentence() {
-        parseWords();
-        text.parse();
         List<IComponent> sentences = text.getComponents();
         for (IComponent wordFromList : wordsOccurrencesInEachSentence.keySet()) {
             List<Integer> list = new ArrayList<>();
@@ -59,8 +56,8 @@ public class WordsParser implements IParser {
         }
     }
 
-    private void parseWords() {
-        ISentence sentence = new Sentence(requiredWords + " ");
+    private void parseRequiredWords(String requiredWords) {
+        IComponent sentence = new Sentence(requiredWords + " ");
         sentence.parse();
         for (IComponent component : sentence.getComponents()) {
             wordsOccurrencesInEachSentence.put(component, null);

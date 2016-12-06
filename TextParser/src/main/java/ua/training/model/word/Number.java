@@ -1,31 +1,27 @@
 package ua.training.model.word;
 
+import ua.training.model.AbstractComposite;
 import ua.training.model.IComponent;
 import ua.training.model.symbol.Digit;
 import ua.training.model.symbol.PunctuationMark;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Number implements IWord {
-
-    private String number;
-    private List<IComponent> components = new ArrayList<>();
+public class Number extends AbstractComposite implements IWord {
 
     private String digitExp = "\\d";
     private String punctuationExp = "\\.";
     private String regExp = digitExp + "|" + punctuationExp;
 
     public Number(String number) {
-        this.number = number;
+        super(number);
     }
 
     @Override
     public void parse() {
         Pattern pattern = Pattern.compile(regExp);
-        Matcher matcher = pattern.matcher(number);
+        Matcher matcher = pattern.matcher(element);
         while (matcher.find()) {
             String element = matcher.group();
             if (element.matches(digitExp)) {
@@ -46,17 +42,5 @@ public class Number implements IWord {
 
     private void addPunctuationMark(String mark) {
         components.add(new PunctuationMark(mark));
-    }
-
-    @Override
-    public List<IComponent> getComponents() {
-        return components;
-    }
-
-    @Override
-    public String toString() {
-        return "Number{" +
-                "number='" + number + '\'' +
-                '}';
     }
 }

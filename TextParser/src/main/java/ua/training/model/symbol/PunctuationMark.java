@@ -1,28 +1,11 @@
 package ua.training.model.symbol;
 
-import ua.training.model.IComponent;
+import ua.training.model.AbstractLeaf;
 
-import java.util.List;
-
-public class PunctuationMark implements ISymbol {
-
-    private String mark;
+public class PunctuationMark extends AbstractLeaf implements ISymbol {
 
     public PunctuationMark(String mark) {
-        this.mark = mark;
+        super(mark);
     }
 
-    public void parse() {}
-
-    @Override
-    public List<IComponent> getComponents() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "PunctuationMark{" +
-                "mark='" + mark + '\'' +
-                '}';
-    }
 }

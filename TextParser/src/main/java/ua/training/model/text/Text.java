@@ -1,27 +1,23 @@
 package ua.training.model.text;
 
+import ua.training.model.AbstractComposite;
 import ua.training.model.IComponent;
 import ua.training.model.sentence.Sentence;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Text implements IText {
-
-    private String text;
-    private List<IComponent> components = new ArrayList<>();
+public class Text extends AbstractComposite implements IText {
 
     private String regExp = ".*?[.!?](?!\\d)";
 
     public Text(String text) {
-        this.text = text;
+        super(text);
     }
 
     public void parse() {
         Pattern pattern = Pattern.compile(regExp);
-        Matcher matcher = pattern.matcher(text);
+        Matcher matcher = pattern.matcher(element);
         while (matcher.find()) {
             addSentence(matcher.group().trim());
         }
@@ -35,8 +31,4 @@ public class Text implements IText {
         components.add(new Sentence(sentence));
     }
 
-    @Override
-    public List<IComponent> getComponents() {
-        return components;
-    }
 }

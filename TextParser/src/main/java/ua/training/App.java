@@ -1,8 +1,8 @@
 package ua.training;
 
 import ua.training.controller.TextController;
-import ua.training.model.reader.FileReader;
-import ua.training.model.reader.IStringReader;
+import ua.training.model.io.reader.FileReader;
+import ua.training.model.io.reader.IStringReader;
 import ua.training.view.ConsoleView;
 import ua.training.view.IView;
 

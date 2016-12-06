@@ -1,4 +1,4 @@
-package ua.training.model.reader;
+package ua.training.model.io.reader;
 
 public interface IStringReader {
 
