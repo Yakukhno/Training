@@ -33,11 +33,11 @@ public class Number extends AbstractCompositeElement {
             component.parse();        }
     }
 
-    private void addDigit(String digit) {
+    void addDigit(String digit) {
         components.add(new Symbol(digit, Symbol.Type.DIGIT));
     }
 
-    private void addPunctuationMark(String mark) {
+    void addPunctuationMark(String mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

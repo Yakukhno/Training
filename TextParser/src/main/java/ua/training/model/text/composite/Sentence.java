@@ -39,15 +39,15 @@ public class Sentence extends AbstractCompositeElement {
         }
     }
 
-    private void addWord(String word) {
+    void addWord(String word) {
         components.add(new Word(word));
     }
 
-    private void addPunctuationMark(String mark) {
+    void addPunctuationMark(String mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 
-    private void addNumber(String number) {
+    void addNumber(String number) {
         components.add(new Number(number));
     }
 }

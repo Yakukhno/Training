@@ -27,17 +27,21 @@ public class Word extends AbstractCompositeElement {
                 addPunctuationMark(element);
             }
         }
+        parseComponents();
+    }
+
+    private void parseComponents() {
         for (IComponent component : components) {
             System.out.println("\t\t" + component);
             component.parse();
         }
     }
 
-    private void addLetter(String letter) {
+    void addLetter(String letter) {
         components.add(new Symbol(letter, Symbol.Type.LETTER));
     }
 
-    private void addPunctuationMark(String mark) {
+    void addPunctuationMark(String mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

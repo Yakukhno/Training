@@ -25,7 +25,7 @@ public class Text extends AbstractCompositeElement {
         }
     }
 
-    private void addSentence(String sentence) {
+    void addSentence(String sentence) {
         components.add(new Sentence(sentence));
     }
 
