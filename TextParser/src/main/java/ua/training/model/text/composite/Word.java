@@ -1,16 +1,13 @@
-package ua.training.model.word;
+package ua.training.model.text.composite;
 
-import ua.training.model.AbstractComposite;
-import ua.training.model.IComponent;
-import ua.training.model.symbol.Letter;
-import ua.training.model.symbol.PunctuationMark;
+import ua.training.model.text.IComponent;
+import ua.training.model.text.basic.Letter;
+import ua.training.model.text.basic.PunctuationMark;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Word extends AbstractComposite implements IWord {
+public class Word extends AbstractCompositeElement {
 
     private String letterExp = "[а-яА-яЁёA-Za-z]";
     private String punctuationExp = "['\\-]";

@@ -1,12 +1,14 @@
-package ua.training.model;
+package ua.training.model.text.basic;
+
+import ua.training.model.text.IComponent;
 
 import java.util.List;
 
-public abstract class AbstractLeaf implements IComponent {
+public abstract class AbstractBasicComponent implements IComponent {
 
-    protected String element;
+    private String element;
 
-    public AbstractLeaf(String element) {
+    public AbstractBasicComponent(String element) {
         this.element = element;
     }
 

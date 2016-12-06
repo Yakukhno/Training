@@ -1,15 +1,14 @@
-package ua.training.model.parser;
+package ua.training.model.text.parser;
 
-import ua.training.model.IComponent;
-import ua.training.model.sentence.Sentence;
-import ua.training.model.text.IText;
-import ua.training.model.text.Text;
+import ua.training.model.text.IComponent;
+import ua.training.model.text.composite.Sentence;
+import ua.training.model.text.composite.Text;
 
 import java.util.*;
 
 public class WordsParserImpl implements IWordsParser {
 
-    private IText text;
+    private IComponent text;
 
     private Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
             = new HashMap<>();

@@ -1,8 +1,7 @@
 package ua.training.controller;
 
-import ua.training.model.io.writer.IStringWriter;
-import ua.training.model.parser.IWordsParser;
-import ua.training.model.parser.WordsParserImpl;
+import ua.training.model.text.parser.IWordsParser;
+import ua.training.model.text.parser.WordsParserImpl;
 import ua.training.model.io.reader.IStringReader;
 import ua.training.view.IView;
 
@@ -11,7 +10,6 @@ public class TextController {
     private IView view;
     private IStringReader textReader;
     private IStringReader wordsReader;
-    private IStringWriter writer;
     private IWordsParser parser;
 
     public TextController(IView view, IStringReader textReader,
@@ -24,9 +22,9 @@ public class TextController {
     public void execute() {
         parser = new WordsParserImpl(textReader.getString(), wordsReader.getString());
         parser.parse();
-        System.out.println(parser.getWordsOccurrencesInAllSentences());
-        System.out.println(parser.getWordsOccurrencesInEachSentence());
-        System.out.println(parser.sortWords(parser.wordsByOccurrencesComparator()
-                .reversed()));
+        view.showMessage(parser.getWordsOccurrencesInAllSentences().toString());
+        view.showMessage(parser.getWordsOccurrencesInEachSentence().toString());
+        view.showMessage(parser.sortWords(parser.wordsByOccurrencesComparator()
+                .reversed()).toString());
     }
 }

@@ -1,6 +1,6 @@
-package ua.training.model.parser;
+package ua.training.model.text.parser;
 
-import ua.training.model.IComponent;
+import ua.training.model.text.IComponent;
 
 import java.util.Comparator;
 import java.util.List;

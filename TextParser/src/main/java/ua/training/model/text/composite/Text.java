@@ -1,15 +1,13 @@
-package ua.training.model.text;
+package ua.training.model.text.composite;
 
-import ua.training.model.AbstractComposite;
-import ua.training.model.IComponent;
-import ua.training.model.sentence.Sentence;
+import ua.training.model.text.IComponent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Text extends AbstractComposite implements IText {
+public class Text extends AbstractCompositeElement {
 
-    private String regExp = ".*?[.!?](?!\\d)";
+    private String regExp = ".*?(\\?!|[.?!](\\.\\.)?)(?!\\d)";
 
     public Text(String text) {
         super(text);

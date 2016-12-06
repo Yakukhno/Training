@@ -1,14 +1,13 @@
-package ua.training.model.word;
+package ua.training.model.text.composite;
 
-import ua.training.model.AbstractComposite;
-import ua.training.model.IComponent;
-import ua.training.model.symbol.Digit;
-import ua.training.model.symbol.PunctuationMark;
+import ua.training.model.text.basic.Digit;
+import ua.training.model.text.IComponent;
+import ua.training.model.text.basic.PunctuationMark;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Number extends AbstractComposite implements IWord {
+public class Number extends AbstractCompositeElement {
 
     private String digitExp = "\\d";
     private String punctuationExp = "\\.";

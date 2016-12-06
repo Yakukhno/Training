@@ -1,4 +1,4 @@
-package ua.training.model;
+package ua.training.model.text;
 
 import java.util.List;
 

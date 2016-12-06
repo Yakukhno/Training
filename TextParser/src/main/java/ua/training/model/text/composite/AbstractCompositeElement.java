@@ -1,14 +1,16 @@
-package ua.training.model;
+package ua.training.model.text.composite;
+
+import ua.training.model.text.IComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractComposite implements IComponent {
+public abstract class AbstractCompositeElement implements IComponent {
 
     protected String element;
     protected List<IComponent> components = new ArrayList<>();
 
-    public AbstractComposite(String element) {
+    public AbstractCompositeElement(String element) {
         this.element = element;
     }
 
@@ -23,9 +25,9 @@ public abstract class AbstractComposite implements IComponent {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractComposite)) return false;
+        if (!(o instanceof AbstractCompositeElement)) return false;
 
-        AbstractComposite that = (AbstractComposite) o;
+        AbstractCompositeElement that = (AbstractCompositeElement) o;
 
         return element != null ? element.equals(that.element) : that.element == null;
     }

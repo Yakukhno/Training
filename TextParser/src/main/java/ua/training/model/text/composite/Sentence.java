@@ -1,15 +1,12 @@
-package ua.training.model.sentence;
+package ua.training.model.text.composite;
 
-import ua.training.model.AbstractComposite;
-import ua.training.model.IComponent;
-import ua.training.model.word.Number;
-import ua.training.model.word.Word;
-import ua.training.model.symbol.PunctuationMark;
+import ua.training.model.text.IComponent;
+import ua.training.model.text.basic.PunctuationMark;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sentence extends AbstractComposite implements ISentence {
+public class Sentence extends AbstractCompositeElement {
 
     private String wordExp = "^[а-яА-яЁёA-Za-z\\-']+$";
     private String numberExp = "^\\d+(\\.*\\d+)?$";
