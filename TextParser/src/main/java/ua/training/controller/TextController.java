@@ -1,5 +1,6 @@
 package ua.training.controller;
 
+import ua.training.model.io.writer.IStringWriter;
 import ua.training.model.parser.IWordsParser;
 import ua.training.model.parser.WordsParserImpl;
 import ua.training.model.io.reader.IStringReader;
@@ -10,6 +11,7 @@ public class TextController {
     private IView view;
     private IStringReader textReader;
     private IStringReader wordsReader;
+    private IStringWriter writer;
     private IWordsParser parser;
 
     public TextController(IView view, IStringReader textReader,
