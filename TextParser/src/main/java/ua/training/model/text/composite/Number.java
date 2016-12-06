@@ -1,8 +1,7 @@
 package ua.training.model.text.composite;
 
-import ua.training.model.text.basic.Digit;
 import ua.training.model.text.IComponent;
-import ua.training.model.text.basic.PunctuationMark;
+import ua.training.model.text.symbol.Symbol;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,16 +29,15 @@ public class Number extends AbstractCompositeElement {
             }
         }
         for (IComponent component : components) {
-//            System.out.println("\t\t" + component);
-            component.parse();
-        }
+            System.out.println("\t\t" + component);
+            component.parse();        }
     }
 
-    private void addDigit(String letter) {
-        components.add(new Digit(letter));
+    private void addDigit(String digit) {
+        components.add(new Symbol(digit, Symbol.Type.DIGIT));
     }
 
     private void addPunctuationMark(String mark) {
-        components.add(new PunctuationMark(mark));
+        components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

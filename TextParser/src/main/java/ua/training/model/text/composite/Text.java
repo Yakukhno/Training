@@ -20,7 +20,7 @@ public class Text extends AbstractCompositeElement {
             addSentence(matcher.group().trim());
         }
         for (IComponent component : components) {
-//            System.out.println(component);
+            System.out.println(component);
             component.parse();
         }
     }

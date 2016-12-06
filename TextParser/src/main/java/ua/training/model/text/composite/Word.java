@@ -1,8 +1,7 @@
 package ua.training.model.text.composite;
 
 import ua.training.model.text.IComponent;
-import ua.training.model.text.basic.Letter;
-import ua.training.model.text.basic.PunctuationMark;
+import ua.training.model.text.symbol.Symbol;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,16 +28,16 @@ public class Word extends AbstractCompositeElement {
             }
         }
         for (IComponent component : components) {
-//            System.out.println("\t\t" + component);
+            System.out.println("\t\t" + component);
             component.parse();
         }
     }
 
     private void addLetter(String letter) {
-        components.add(new Letter(letter));
+        components.add(new Symbol(letter, Symbol.Type.LETTER));
     }
 
     private void addPunctuationMark(String mark) {
-        components.add(new PunctuationMark(mark));
+        components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

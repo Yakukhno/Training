@@ -1,7 +1,7 @@
 package ua.training.model.text.composite;
 
 import ua.training.model.text.IComponent;
-import ua.training.model.text.basic.PunctuationMark;
+import ua.training.model.text.symbol.Symbol;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +34,7 @@ public class Sentence extends AbstractCompositeElement {
             }
         }
         for (IComponent component : components) {
-//            System.out.println("\t" + component);
+            System.out.println("\t" + component);
             component.parse();
         }
     }
@@ -44,7 +44,7 @@ public class Sentence extends AbstractCompositeElement {
     }
 
     private void addPunctuationMark(String mark) {
-        components.add(new PunctuationMark(mark));
+        components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 
     private void addNumber(String number) {
