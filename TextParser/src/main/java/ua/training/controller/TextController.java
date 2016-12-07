@@ -5,7 +5,7 @@ import ua.training.model.text.parser.WordsParserImpl;
 import ua.training.model.io.reader.IStringReader;
 import ua.training.view.IView;
 
-public class TextController {
+public class TextController implements IController {
 
     private IView view;
     private IStringReader textReader;
@@ -17,14 +17,19 @@ public class TextController {
         this.view = view;
         this.textReader = textReader;
         this.wordsReader = wordsReader;
+        parser = new WordsParserImpl(textReader.getString(),
+                wordsReader.getString());
     }
 
     public void execute() {
-        parser = new WordsParserImpl(textReader.getString(), wordsReader.getString());
         parser.parse();
-        view.showMessage(parser.getWordsOccurrencesInAllSentences().toString());
+
         view.showMessage(parser.getWordsOccurrencesInEachSentence().toString());
         view.showMessage(parser.sortWords(parser.wordsByOccurrencesComparator()
                 .reversed()).toString());
+    }
+
+    void setParser(IWordsParser parser) {
+        this.parser = parser;
     }
 }

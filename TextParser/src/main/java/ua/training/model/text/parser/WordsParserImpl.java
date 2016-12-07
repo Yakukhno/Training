@@ -12,7 +12,8 @@ public class WordsParserImpl implements IWordsParser {
 
     private Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
             = new HashMap<>();
-    private Map<IComponent, Integer> wordsOccurrencesInAllSentences;
+    private Map<IComponent, Integer> wordsOccurrencesInAllSentences
+            = new HashMap<>();
 
     public WordsParserImpl(String text, String requiredWords) {
         this.text = new Text(text);
@@ -26,7 +27,7 @@ public class WordsParserImpl implements IWordsParser {
         countWordsInAllSentences();
     }
 
-    private void countWordsInEachSentence() {
+    void countWordsInEachSentence() {
         List<IComponent> sentences = text.getComponents();
         for (IComponent wordFromList : wordsOccurrencesInEachSentence.keySet()) {
             List<Integer> list = new ArrayList<>();
@@ -43,8 +44,7 @@ public class WordsParserImpl implements IWordsParser {
         }
     }
 
-    private void countWordsInAllSentences() {
-        wordsOccurrencesInAllSentences = new HashMap<>();
+    void countWordsInAllSentences() {
         Set<Map.Entry<IComponent, List<Integer>>> entrySet
                 = wordsOccurrencesInEachSentence.entrySet();
         for (Map.Entry<IComponent, List<Integer>> entry : entrySet) {
@@ -55,7 +55,7 @@ public class WordsParserImpl implements IWordsParser {
         }
     }
 
-    private void parseRequiredWords(String requiredWords) {
+    void parseRequiredWords(String requiredWords) {
         IComponent sentence = new Sentence(requiredWords + " ");
         sentence.parse();
         for (IComponent component : sentence.getComponents()) {
@@ -80,5 +80,19 @@ public class WordsParserImpl implements IWordsParser {
 
     public Map<IComponent, Integer> getWordsOccurrencesInAllSentences() {
         return wordsOccurrencesInAllSentences;
+    }
+
+    void setText(IComponent text) {
+        this.text = text;
+    }
+
+    void setWordsOccurrencesInEachSentence(Map<IComponent,
+            List<Integer>> wordsOccurrencesInEachSentence) {
+        this.wordsOccurrencesInEachSentence = wordsOccurrencesInEachSentence;
+    }
+
+    void setWordsOccurrencesInAllSentences(Map<IComponent,
+            Integer> wordsOccurrencesInAllSentences) {
+        this.wordsOccurrencesInAllSentences = wordsOccurrencesInAllSentences;
     }
 }
