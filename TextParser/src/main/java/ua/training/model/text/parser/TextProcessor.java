@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Ivan Yakukhno
  */
-public class WordsParserImpl implements IWordsParser {
+public class TextProcessor implements IWordsParser {
 
     /**
      * Text to parse.
@@ -37,19 +37,17 @@ public class WordsParserImpl implements IWordsParser {
      * @param text string presentation of text in which required words searches.
      * @param requiredWords string presentation of required words to search
      */
-    public WordsParserImpl(String text, String requiredWords) {
+    public TextProcessor(String text, String requiredWords) {
         this.text = new Text(text);
         parseRequiredWords(requiredWords);
     }
 
     /**
-     * Parses text and count words occurrences in sentences.
+     * Parses text.
      */
     @Override
     public void parse() {
         text.parse();
-        countWordsInEachSentence();
-        countWordsInAllSentences();
     }
 
     /**
@@ -107,7 +105,7 @@ public class WordsParserImpl implements IWordsParser {
     public TreeMap<IComponent, Integer> sortWords(Comparator<IComponent>
                                                           comparator) {
         TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
-        sortedMap.putAll(wordsOccurrencesInAllSentences);
+        sortedMap.putAll(getWordsOccurrencesInAllSentences());
         return sortedMap;
     }
 
@@ -120,11 +118,22 @@ public class WordsParserImpl implements IWordsParser {
     }
 
     public Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence() {
+        if (wordsOccurrencesInEachSentence.values().iterator().next() == null) {
+            countWordsInEachSentence();
+        }
         return wordsOccurrencesInEachSentence;
     }
 
     public Map<IComponent, Integer> getWordsOccurrencesInAllSentences() {
+        if (wordsOccurrencesInAllSentences.size() == 0) {
+            getWordsOccurrencesInEachSentence();
+            countWordsInAllSentences();
+        }
         return wordsOccurrencesInAllSentences;
+    }
+
+    public IComponent getText() {
+        return text;
     }
 
     void setText(IComponent text) {

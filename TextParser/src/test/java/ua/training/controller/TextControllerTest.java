@@ -3,6 +3,7 @@ package ua.training.controller;
 import org.junit.Test;
 import ua.training.model.io.reader.IStringReader;
 import ua.training.model.io.writer.IStringWriter;
+import ua.training.model.text.IComponent;
 import ua.training.model.text.parser.IWordsParser;
 import ua.training.view.IView;
 
@@ -23,6 +24,7 @@ public class TextControllerTest {
         Comparator comparator = mock(Comparator.class);
 
         when(wordsParser.wordsByOccurrencesComparator()).thenReturn(comparator);
+        when(wordsParser.getText()).thenReturn(mock(IComponent.class));
 
         controller = new TextController(view, textReader, wordsReader);
         controller.setParser(wordsParser);

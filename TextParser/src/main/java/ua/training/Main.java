@@ -26,8 +26,8 @@ public class Main {
                 new File("resources/text.txt"));
         IStringReader wordReader = new FileReader(
                 new File("resources/words.txt"));
-//        IView view = new FileView(new File("resources/output.txt"));
-        IView view = new ConsoleView();
+        IView view = new FileView(new File("resources/output.txt"));
+//        IView view = new ConsoleView();
         IController controller = new TextController(view, textReader,
                 wordReader);
         controller.execute();

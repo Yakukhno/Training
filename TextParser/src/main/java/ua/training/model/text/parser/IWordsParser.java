@@ -27,6 +27,8 @@ public interface IWordsParser extends IParser {
      */
     Map<IComponent, Integer> getWordsOccurrencesInAllSentences();
 
+    IComponent getText();
+
     /**
      * Sorts words using comparator.
      * @return sorted map of words

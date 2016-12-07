@@ -14,11 +14,11 @@ import static org.mockito.Mockito.*;
 
 public class TestWordsParser {
 
-    private WordsParserImpl wordsParser;
+    private TextProcessor wordsParser;
 
     @Before
     public void before() {
-        wordsParser = new WordsParserImpl("", "");
+        wordsParser = new TextProcessor("", "");
     }
 
     @Test
