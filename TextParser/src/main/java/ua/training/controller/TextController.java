@@ -5,22 +5,41 @@ import ua.training.model.text.parser.WordsParserImpl;
 import ua.training.model.io.reader.IStringReader;
 import ua.training.view.IView;
 
+/**
+ * Class describes controller between parser and view.
+ * Implements {@link IController} interface.
+ *
+ * @author Ivan Yakukhno
+ */
 public class TextController implements IController {
 
+    /**
+     * View.
+     */
     private IView view;
-    private IStringReader textReader;
-    private IStringReader wordsReader;
+
+    /**
+     * Words parser.
+     */
     private IWordsParser parser;
 
+    /**
+     * Constructor. Creates {@link WordsParserImpl} object.
+     * @param view view
+     * @param textReader reader of text
+     * @param wordsReader reader of words
+     */
     public TextController(IView view, IStringReader textReader,
                           IStringReader wordsReader) {
         this.view = view;
-        this.textReader = textReader;
-        this.wordsReader = wordsReader;
         parser = new WordsParserImpl(textReader.getString(),
                 wordsReader.getString());
     }
 
+    /**
+     * Invokes parse methods on parser.
+     * Transmit results of parsing in view.
+     */
     public void execute() {
         parser.parse();
 

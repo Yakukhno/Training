@@ -6,20 +6,45 @@ import ua.training.model.text.composite.Text;
 
 import java.util.*;
 
+/**
+ * Class describes words parser. Counts words occurrences in sentences from text.
+ * Implements {@link IWordsParser} interface.
+ *
+ * @author Ivan Yakukhno
+ */
 public class WordsParserImpl implements IWordsParser {
 
+    /**
+     * Text to parse.
+     */
     private IComponent text;
 
+    /**
+     * Map, which contains words and their occurrences in each sentence.
+     */
     private Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
             = new HashMap<>();
+
+    /**
+     * Map, which contains words and their occurrences in all sentences.
+     */
     private Map<IComponent, Integer> wordsOccurrencesInAllSentences
             = new HashMap<>();
 
+    /**
+     * Constructor. Creates {@link Text} object from string text.
+     * Invokes method for parsing required words.
+     * @param text string presentation of text in which required words searches.
+     * @param requiredWords string presentation of required words to search
+     */
     public WordsParserImpl(String text, String requiredWords) {
         this.text = new Text(text);
         parseRequiredWords(requiredWords);
     }
 
+    /**
+     * Parses text and count words occurrences in sentences.
+     */
     @Override
     public void parse() {
         text.parse();
@@ -27,6 +52,10 @@ public class WordsParserImpl implements IWordsParser {
         countWordsInAllSentences();
     }
 
+    /**
+     * Counts words occurrences in each sentence from text and
+     * put them in wordsOccurrencesInEachSentence map.
+     */
     void countWordsInEachSentence() {
         List<IComponent> sentences = text.getComponents();
         for (IComponent wordFromList : wordsOccurrencesInEachSentence.keySet()) {
@@ -44,6 +73,10 @@ public class WordsParserImpl implements IWordsParser {
         }
     }
 
+    /**
+     * Counts words occurrences in all sentences from text
+     * using wordsOccurrencesInEachSentence map.
+     */
     void countWordsInAllSentences() {
         Set<Map.Entry<IComponent, List<Integer>>> entrySet
                 = wordsOccurrencesInEachSentence.entrySet();
@@ -55,6 +88,10 @@ public class WordsParserImpl implements IWordsParser {
         }
     }
 
+    /**
+     * Parses required words and put them in wordsOccurrencesInEachSentence map.
+     * @param requiredWords string presentation of required words to search
+     */
     void parseRequiredWords(String requiredWords) {
         IComponent sentence = new Sentence(requiredWords + " ");
         sentence.parse();
@@ -63,6 +100,10 @@ public class WordsParserImpl implements IWordsParser {
         }
     }
 
+    /**
+     * Sorts words using comparator.
+     * @return sorted map of words and their occurrences
+     */
     public TreeMap<IComponent, Integer> sortWords(Comparator<IComponent>
                                                           comparator) {
         TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
@@ -70,6 +111,10 @@ public class WordsParserImpl implements IWordsParser {
         return sortedMap;
     }
 
+    /**
+     * Returns comparator, which compare words by occurrences.
+     * @return comparator, which compare words by occurrences
+     */
     public Comparator<IComponent> wordsByOccurrencesComparator() {
         return Comparator.comparing(o -> wordsOccurrencesInAllSentences.get(o));
     }

@@ -5,17 +5,44 @@ import ua.training.model.text.IComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class describes element, which can parse its string element and
+ * invokes parse method on its components.
+ * Implements {@link IComponent} interface.
+ *
+ * @author Ivan Yakukhno
+ */
 public abstract class AbstractCompositeElement implements IComponent {
 
+    /**
+     * String presentation of element.
+     */
     protected String element;
+
+    /**
+     * List of components of element.
+     */
     protected List<IComponent> components = new ArrayList<>();
 
+    /**
+     * Constructor.
+     * @param element string presentation of element.
+     */
     public AbstractCompositeElement(String element) {
         this.element = element;
     }
 
     @Override
     public abstract void parse();
+
+    /**
+     * Invokes parse methods on components.
+     */
+    protected void parseComponents() {
+        for (IComponent component : components) {
+            component.parse();
+        }
+    }
 
     @Override
     public List<IComponent> getComponents() {
