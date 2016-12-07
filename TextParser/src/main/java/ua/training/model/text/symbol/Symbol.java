@@ -2,6 +2,7 @@ package ua.training.model.text.symbol;
 
 import ua.training.model.text.IComponent;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class Symbol implements IComponent {
     /**
      * Symbol.
      */
-    private String element;
+    private char element;
 
     /**
      * Type of symbol.
@@ -26,7 +27,7 @@ public class Symbol implements IComponent {
      * @param element symbol
      * @param type type of symbol
      */
-    public Symbol(String element, Type type) {
+    public Symbol(char element, Type type) {
         this.element = element;
         this.type = type;
     }
@@ -58,9 +59,8 @@ public class Symbol implements IComponent {
 
         Symbol symbol = (Symbol) o;
 
-        return (element != null
-                ? element.equals(symbol.element)
-                : symbol.element == null) && type == symbol.type;
+        if (element != symbol.element) return false;
+        return type == symbol.type;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Symbol implements IComponent {
      */
     @Override
     public int hashCode() {
-        int result = element != null ? element.hashCode() : 0;
+        int result = (int) element;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }

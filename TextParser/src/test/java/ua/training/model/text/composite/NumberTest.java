@@ -25,35 +25,20 @@ public class NumberTest {
         number.parse();
 
         List<IComponent> list = new ArrayList<>();
-        list.add(new Symbol("3", Symbol.Type.DIGIT));
-        list.add(new Symbol(".", Symbol.Type.PUNCTUATION_MARK));
-        list.add(new Symbol("1", Symbol.Type.DIGIT));
-        list.add(new Symbol("4", Symbol.Type.DIGIT));
+        list.add(new Symbol('3', Symbol.Type.DIGIT));
+        list.add(new Symbol('.', Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol('1', Symbol.Type.DIGIT));
+        list.add(new Symbol('4', Symbol.Type.DIGIT));
 
         assertEquals(list, number.getComponents());
     }
 
     @Test
-    public void testParseComponents() {
-        number = new Number("");
-
-        number.components.add(mock(IComponent.class));
-        number.components.add(mock(IComponent.class));
-        number.components.add(mock(IComponent.class));
-
-        number.parse();
-
-        for (IComponent component : number.getComponents()) {
-            verify(component).parse();
-        }
-    }
-
-    @Test
     public void testAddMethods() {
         number.components = mock(List.class);
-        number.addDigit("4");
-        number.addDigit("2");
-        number.addPunctuationMark(".");
+        number.addDigit('4');
+        number.addDigit('2');
+        number.addPunctuationMark('.');
         verify(number.components, times(3)).add(any(Symbol.class));
     }
 

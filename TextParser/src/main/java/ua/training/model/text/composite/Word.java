@@ -47,9 +47,11 @@ public class Word extends AbstractCompositeElement {
         while (matcher.find()) {
             String element = matcher.group();
             if (element.matches(letterExp)) {
-                addLetter(element);
+                addLetter(element.charAt(0));
             } else if (element.matches(punctuationExp)) {
-                addPunctuationMark(element);
+                addPunctuationMark(element.charAt(0));
+            } else {
+                System.err.print("Error - " + element);
             }
         }
         parseComponents();
@@ -59,7 +61,7 @@ public class Word extends AbstractCompositeElement {
      * Create object of letter {@link Symbol} and adds it to list of components.
      * @param letter string presentation of letter.
      */
-    void addLetter(String letter) {
+    void addLetter(char letter) {
         components.add(new Symbol(letter, Symbol.Type.LETTER));
     }
 
@@ -67,7 +69,7 @@ public class Word extends AbstractCompositeElement {
      * Create object of punctuation {@link Symbol} and adds it to list of components.
      * @param mark string presentation of punctuation mark.
      */
-    void addPunctuationMark(String mark) {
+    void addPunctuationMark(char mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

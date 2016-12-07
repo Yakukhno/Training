@@ -25,35 +25,20 @@ public class WordTest {
         word.parse();
 
         List<IComponent> list = new ArrayList<>();
-        list.add(new Symbol("А", Symbol.Type.LETTER));
-        list.add(new Symbol("б", Symbol.Type.LETTER));
-        list.add(new Symbol("'", Symbol.Type.PUNCTUATION_MARK));
-        list.add(new Symbol("я", Symbol.Type.LETTER));
+        list.add(new Symbol('А', Symbol.Type.LETTER));
+        list.add(new Symbol('б', Symbol.Type.LETTER));
+        list.add(new Symbol('\'', Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol('я', Symbol.Type.LETTER));
 
         assertEquals(list, word.getComponents());
     }
 
     @Test
-    public void testParseComponents() {
-        word = new Word("");
-
-        word.components.add(mock(IComponent.class));
-        word.components.add(mock(IComponent.class));
-        word.components.add(mock(IComponent.class));
-
-        word.parse();
-
-        for (IComponent component : word.getComponents()) {
-            verify(component).parse();
-        }
-    }
-
-    @Test
     public void testAddMethods() {
         word.components = mock(List.class);
-        word.addLetter("c");
-        word.addLetter("п");
-        word.addPunctuationMark("'");
+        word.addLetter('c');
+        word.addLetter('п');
+        word.addPunctuationMark('\'');
         verify(word.components, times(3)).add(any(Symbol.class));
     }
 

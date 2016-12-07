@@ -56,7 +56,7 @@ public class Sentence extends AbstractCompositeElement {
             } else if (element.matches(numberExp)) {
                 addNumber(element);
             } else if (element.matches(punctuationExp)) {
-                addPunctuationMark(element);
+                addPunctuationMark(element.charAt(0));
             } else {
                 System.err.print("Error - " + element);
             }
@@ -76,7 +76,7 @@ public class Sentence extends AbstractCompositeElement {
      * Create object of punctuation {@link Symbol} and adds it to list of components.
      * @param mark string presentation of punctuation mark.
      */
-    void addPunctuationMark(String mark) {
+    void addPunctuationMark(char mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 

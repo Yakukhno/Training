@@ -28,14 +28,14 @@ public class SentenceTest {
         list.add(new Word("И"));
         list.add(new Word("я"));
         list.add(new Word("тоже"));
-        list.add(new Symbol(",", Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol(',', Symbol.Type.PUNCTUATION_MARK));
         list.add(new Word("гляжу"));
         list.add(new Word("ей"));
         list.add(new Word("в"));
         list.add(new Word("глаза"));
-        list.add(new Symbol("!", Symbol.Type.PUNCTUATION_MARK));
-        list.add(new Symbol(".", Symbol.Type.PUNCTUATION_MARK));
-        list.add(new Symbol(".", Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol('!', Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol('.', Symbol.Type.PUNCTUATION_MARK));
+        list.add(new Symbol('.', Symbol.Type.PUNCTUATION_MARK));
 
         assertEquals(list, sentence.getComponents());
     }
@@ -60,7 +60,7 @@ public class SentenceTest {
         sentence.components = mock(List.class);
         sentence.addWord("abc");
         sentence.addNumber("24");
-        sentence.addPunctuationMark(",");
+        sentence.addPunctuationMark(',');
         verify(sentence.components, times(3)).add(any(IComponent.class));
     }
 

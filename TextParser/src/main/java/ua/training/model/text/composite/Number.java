@@ -46,9 +46,11 @@ public class Number extends AbstractCompositeElement {
         while (matcher.find()) {
             String element = matcher.group();
             if (element.matches(digitExp)) {
-                addDigit(element);
+                addDigit(element.charAt(0));
             } else if (element.matches(punctuationExp)) {
-                addPunctuationMark(element);
+                addPunctuationMark(element.charAt(0));
+            } else {
+                System.err.print("Error - " + element);
             }
         }
         parseComponents();
@@ -58,7 +60,7 @@ public class Number extends AbstractCompositeElement {
      * Create object of digit {@link Symbol} and adds it to list of components.
      * @param digit string presentation of digit.
      */
-    void addDigit(String digit) {
+    void addDigit(char digit) {
         components.add(new Symbol(digit, Symbol.Type.DIGIT));
     }
 
@@ -66,7 +68,7 @@ public class Number extends AbstractCompositeElement {
      * Create object of punctuation {@link Symbol} and adds it to list of components.
      * @param mark string presentation of punctuation mark.
      */
-    void addPunctuationMark(String mark) {
+    void addPunctuationMark(char mark) {
         components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }
