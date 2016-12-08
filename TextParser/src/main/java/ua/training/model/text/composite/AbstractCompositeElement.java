@@ -49,6 +49,14 @@ public abstract class AbstractCompositeElement implements IComponent {
         return components;
     }
 
+    public String getString() {
+        String str = "";
+        for (IComponent component : components) {
+            str += component.getString();
+        }
+        return str + " ";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

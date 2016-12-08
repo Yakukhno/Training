@@ -14,7 +14,7 @@ public class Symbol implements IComponent {
     /**
      * Symbol.
      */
-    private char element;
+    private final char element;
 
     /**
      * Type of element.
@@ -44,6 +44,11 @@ public class Symbol implements IComponent {
     @Override
     public List<IComponent> getComponents() {
         return null;
+    }
+
+    @Override
+    public String getString() {
+        return Character.toString(element);
     }
 
     /**

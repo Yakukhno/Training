@@ -1,5 +1,6 @@
 package ua.training.model.text.composite;
 
+import ua.training.model.text.element.SymbolFactory;
 import ua.training.model.text.element.Symbol;
 
 import java.util.regex.Matcher;
@@ -61,7 +62,7 @@ public class Number extends AbstractCompositeElement {
      * @param digit string presentation of digit.
      */
     void addDigit(char digit) {
-        components.add(new Symbol(digit, Symbol.Type.DIGIT));
+        components.add(SymbolFactory.getSymbol(digit, Symbol.Type.DIGIT));
     }
 
     /**
@@ -69,6 +70,6 @@ public class Number extends AbstractCompositeElement {
      * @param mark string presentation of punctuation mark.
      */
     void addPunctuationMark(char mark) {
-        components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
+        components.add(SymbolFactory.getSymbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 }

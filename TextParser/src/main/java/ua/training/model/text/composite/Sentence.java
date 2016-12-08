@@ -1,5 +1,6 @@
 package ua.training.model.text.composite;
 
+import ua.training.model.text.element.SymbolFactory;
 import ua.training.model.text.element.Symbol;
 
 import java.util.regex.Matcher;
@@ -77,7 +78,7 @@ public class Sentence extends AbstractCompositeElement {
      * @param mark string presentation of punctuation mark.
      */
     void addPunctuationMark(char mark) {
-        components.add(new Symbol(mark, Symbol.Type.PUNCTUATION_MARK));
+        components.add(SymbolFactory.getSymbol(mark, Symbol.Type.PUNCTUATION_MARK));
     }
 
     /**

@@ -34,6 +34,10 @@ public class Code implements IComponent {
         return null;
     }
 
+    public String getString() {
+        return element;
+    }
+
     /**
      * Equals objects of {@link Code} type using element field.
      * @param o object to equality.

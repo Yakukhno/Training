@@ -20,4 +20,6 @@ public interface IComponent {
      */
     List<IComponent> getComponents();
 
+    String getString();
+
 }
