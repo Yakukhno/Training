@@ -8,37 +8,43 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Interface describes parser, which parses words in text.
+ * Interface describes text processor, which can search words in text.
  * Extends {@link IParser} interface.
  *
  * @author Ivan Yakukhno
  */
-public interface IWordsParser extends IParser {
+public interface ITextProcessor {
 
     /**
      * Returns words occurrences in each sentence in text.
      * @return words occurrences in each sentence in text
      */
-    Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence();
+    Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence(
+            String requiredWords);
 
     /**
      * Returns words occurrences in all sentences in text.
      * @return words occurrences in all sentences in text
      */
-    Map<IComponent, Integer> getWordsOccurrencesInAllSentences();
+    Map<IComponent, Integer> getWordsOccurrencesInAllSentences(String requiredWords);
 
+    /**
+     * Returns {@link IComponent} object text.
+     * @return {@link IComponent} object of text
+     */
     IComponent getText();
 
     /**
      * Sorts words using comparator.
      * @return sorted map of words
      */
-    TreeMap<IComponent, Integer> sortWords(Comparator<IComponent> comparator);
+    TreeMap<IComponent, Integer> sortWords(Map<IComponent, Integer> wordsToSort,
+                                           Comparator<IComponent> comparator);
 
     /**
      * Returns comparator, which compare words by occurrences.
      * @return comparator, which compare words by occurrences
      */
-    Comparator<IComponent> wordsByOccurrencesComparator();
+    Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map);
 
 }

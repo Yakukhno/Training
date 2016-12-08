@@ -1,13 +1,16 @@
 package ua.training.controller;
 
 import ua.training.model.text.IComponent;
-import ua.training.model.text.parser.IWordsParser;
+import ua.training.model.text.composite.ICompositeElement;
+import ua.training.model.text.parser.ITextProcessor;
 import ua.training.model.text.parser.TextProcessor;
 import ua.training.model.io.reader.IStringReader;
 import ua.training.view.IView;
 
+import java.util.Map;
+
 /**
- * Class describes controller between parser and view.
+ * Class describes controller between textProcessor and view.
  * Implements {@link IController} interface.
  *
  * @author Ivan Yakukhno
@@ -20,9 +23,13 @@ public class TextController implements IController {
     private IView view;
 
     /**
-     * Words parser.
+     * Text processor.
      */
-    private IWordsParser parser;
+    private ITextProcessor textProcessor;
+
+    private IStringReader textReader;
+
+    private IStringReader wordsReader;
 
     /**
      * Constructor. Creates {@link TextProcessor} object.
@@ -33,22 +40,25 @@ public class TextController implements IController {
     public TextController(IView view, IStringReader textReader,
                           IStringReader wordsReader) {
         this.view = view;
-        parser = new TextProcessor(textReader.getString(),
-                wordsReader.getString());
+        this.textReader = textReader;
+        this.wordsReader = wordsReader;
+        textProcessor = new TextProcessor(textReader.getString());
     }
 
     /**
-     * Invokes parse methods on parser.
+     * Invokes parse methods on textProcessor.
      * Transmit results of parsing in view.
      */
     public void execute() {
-        parser.parse();
+//        view.showMessage(componentToString(textProcessor.getText(), ""));
 
-        view.showMessage(componentToString(parser.getText(), ""));
+        view.showMessage(textProcessor.getWordsOccurrencesInEachSentence(
+                wordsReader.getString()).toString());
 
-        view.showMessage(parser.getWordsOccurrencesInEachSentence().toString());
-        view.showMessage(parser.sortWords(parser.wordsByOccurrencesComparator()
-                .reversed()).toString());
+        Map<IComponent, Integer> map = textProcessor
+                .getWordsOccurrencesInAllSentences(wordsReader.getString());
+        view.showMessage(textProcessor.sortWords(map, textProcessor
+                .wordsByOccurrencesComparator(map).reversed()).toString());
     }
 
     /**
@@ -59,15 +69,12 @@ public class TextController implements IController {
      */
     String componentToString(IComponent component, String tabulation) {
         String string = "\n" + tabulation + component.toString();
-        if (component.getComponents() != null) {
-            for (IComponent loopComponent : component.getComponents()) {
+        if (component instanceof ICompositeElement) {
+            for (IComponent loopComponent : ((ICompositeElement)component).getComponents()) {
                 string += componentToString(loopComponent, tabulation + "\t");
             }
         }
         return string;
     }
 
-    void setParser(IWordsParser parser) {
-        this.parser = parser;
-    }
 }

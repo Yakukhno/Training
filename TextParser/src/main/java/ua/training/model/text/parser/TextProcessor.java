@@ -1,68 +1,67 @@
 package ua.training.model.text.parser;
 
 import ua.training.model.text.IComponent;
-import ua.training.model.text.composite.Sentence;
-import ua.training.model.text.composite.Text;
+import ua.training.model.text.composite.ICompositeElement;
 
 import java.util.*;
 
 /**
- * Class describes words parser. Counts words occurrences in sentences from text.
- * Implements {@link IWordsParser} interface.
+ * Class describes text processor. Counts words occurrences in sentences from text.
+ * Implements {@link ITextProcessor} interface.
  *
  * @author Ivan Yakukhno
  */
-public class TextProcessor implements IWordsParser {
+public class TextProcessor implements ITextProcessor {
 
     /**
      * Text to parse.
      */
-    private IComponent text;
+    private ICompositeElement text;
 
     /**
-     * Map, which contains words and their occurrences in each sentence.
+     * Parser to parse string values.
      */
-    private Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
-            = new HashMap<>();
+    private IParser parser = new CompositeElementParser();
 
     /**
-     * Map, which contains words and their occurrences in all sentences.
+     * Constructor initialized text field with parsed value.
+     * @param text string text for processing
      */
-    private Map<IComponent, Integer> wordsOccurrencesInAllSentences
-            = new HashMap<>();
-
-    /**
-     * Constructor. Creates {@link Text} object from string text.
-     * Invokes method for parsing required words.
-     * @param text string presentation of text in which required words searches.
-     * @param requiredWords string presentation of required words to search
-     */
-    public TextProcessor(String text, String requiredWords) {
-        this.text = new Text(text);
-        parseRequiredWords(requiredWords);
+    public TextProcessor(String text) {
+        this.text = parser.parseText(text);
     }
 
     /**
-     * Parses text.
+     * Sorts map using comparator.
+     * @return sorted map of words and their occurrences
      */
-    @Override
-    public void parse() {
-        text.parse();
+    public TreeMap<IComponent, Integer> sortWords(
+            Map<IComponent, Integer> wordsToSort,
+            Comparator<IComponent> comparator) {
+        TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
+        sortedMap.putAll(wordsToSort);
+        return sortedMap;
     }
 
     /**
-     * Counts words occurrences in each sentence from text and
-     * put them in wordsOccurrencesInEachSentence map.
+     * Returns comparator, which compare words by occurrences.
+     * @return comparator, which compare words by occurrences
      */
-    void countWordsInEachSentence() {
+    public Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map) {
+        return Comparator.comparing(map::get);
+    }
+
+    public Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence(String requiredWords) {
+        Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence = parseRequiredWords(requiredWords);
         List<IComponent> sentences = text.getComponents();
         for (IComponent wordFromList : wordsOccurrencesInEachSentence.keySet()) {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < sentences.size(); i++) {
                 IComponent sentence = sentences.get(i);
                 list.add(i, 0);
-                if (sentence instanceof Sentence) {
-                    for (IComponent word : sentence.getComponents()) {
+                if (sentence instanceof ICompositeElement) {
+                    for (IComponent word
+                            : ((ICompositeElement)sentence).getComponents()) {
                         if (word.equals(wordFromList)) {
                             list.set(i, list.get(i) + 1);
                         }
@@ -71,84 +70,49 @@ public class TextProcessor implements IWordsParser {
             }
             wordsOccurrencesInEachSentence.put(wordFromList, list);
         }
+        return wordsOccurrencesInEachSentence;
     }
 
-    /**
-     * Counts words occurrences in all sentences from text
-     * using wordsOccurrencesInEachSentence map.
-     */
-    void countWordsInAllSentences() {
+    public Map<IComponent, Integer> getWordsOccurrencesInAllSentences(String requiredWords) {
         Set<Map.Entry<IComponent, List<Integer>>> entrySet
-                = wordsOccurrencesInEachSentence.entrySet();
+                = getWordsOccurrencesInEachSentence(requiredWords).entrySet();
+        Map<IComponent, Integer> wordsOccurrencesInAllSentences = new HashMap<>();
         for (Map.Entry<IComponent, List<Integer>> entry : entrySet) {
             wordsOccurrencesInAllSentences.put(entry.getKey(), entry.getValue()
                     .stream()
                     .reduce((s1, s2) -> (s1 + s2))
                     .orElse(0));
         }
+        return wordsOccurrencesInAllSentences;
     }
 
     /**
      * Parses required words and put them in wordsOccurrencesInEachSentence map.
      * @param requiredWords string presentation of required words to search
      */
-    void parseRequiredWords(String requiredWords) {
-        IComponent sentence = new Sentence(requiredWords + " ");
-        sentence.parse();
+    Map<IComponent, List<Integer>> parseRequiredWords(String requiredWords) {
+        Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence
+                = new HashMap<>();
+        ICompositeElement sentence = parser.parseSentence(requiredWords + " ");
         for (IComponent component : sentence.getComponents()) {
             wordsOccurrencesInEachSentence.put(component, null);
-        }
-    }
-
-    /**
-     * Sorts words using comparator.
-     * @return sorted map of words and their occurrences
-     */
-    public TreeMap<IComponent, Integer> sortWords(Comparator<IComponent>
-                                                          comparator) {
-        TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
-        sortedMap.putAll(getWordsOccurrencesInAllSentences());
-        return sortedMap;
-    }
-
-    /**
-     * Returns comparator, which compare words by occurrences.
-     * @return comparator, which compare words by occurrences
-     */
-    public Comparator<IComponent> wordsByOccurrencesComparator() {
-        return Comparator.comparing(o -> wordsOccurrencesInAllSentences.get(o));
-    }
-
-    public Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence() {
-        if (wordsOccurrencesInEachSentence.values().iterator().next() == null) {
-            countWordsInEachSentence();
         }
         return wordsOccurrencesInEachSentence;
     }
 
-    public Map<IComponent, Integer> getWordsOccurrencesInAllSentences() {
-        if (wordsOccurrencesInAllSentences.size() == 0) {
-            getWordsOccurrencesInEachSentence();
-            countWordsInAllSentences();
-        }
-        return wordsOccurrencesInAllSentences;
-    }
-
-    public IComponent getText() {
+    public ICompositeElement getText() {
         return text;
     }
 
-    void setText(IComponent text) {
+    public void setText(ICompositeElement text) {
         this.text = text;
     }
 
-    void setWordsOccurrencesInEachSentence(Map<IComponent,
-            List<Integer>> wordsOccurrencesInEachSentence) {
-        this.wordsOccurrencesInEachSentence = wordsOccurrencesInEachSentence;
+    public IParser getParser() {
+        return parser;
     }
 
-    void setWordsOccurrencesInAllSentences(Map<IComponent,
-            Integer> wordsOccurrencesInAllSentences) {
-        this.wordsOccurrencesInAllSentences = wordsOccurrencesInAllSentences;
+    public void setParser(IParser parser) {
+        this.parser = parser;
     }
 }

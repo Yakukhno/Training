@@ -31,23 +31,8 @@ public class Symbol implements IComponent {
         this.type = type;
     }
 
-    /**
-     * Stub method, do nothing.
-     */
     @Override
-    public void parse() {}
-
-    /**
-     * Stub method. Returns null.
-     * @return null
-     */
-    @Override
-    public List<IComponent> getComponents() {
-        return null;
-    }
-
-    @Override
-    public String getString() {
+    public String getElement() {
         return Character.toString(element);
     }
 

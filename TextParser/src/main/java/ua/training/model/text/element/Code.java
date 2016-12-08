@@ -19,22 +19,7 @@ public class Code implements IComponent {
         this.element = element;
     }
 
-    /**
-     * Stub method, do nothing.
-     */
-    @Override
-    public void parse() {}
-
-    /**
-     * Stub method. Returns null.
-     * @return null
-     */
-    @Override
-    public List<IComponent> getComponents() {
-        return null;
-    }
-
-    public String getString() {
+    public String getElement() {
         return element;
     }
 
