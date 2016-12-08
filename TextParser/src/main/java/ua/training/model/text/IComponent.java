@@ -7,6 +7,10 @@ package ua.training.model.text;
  */
 public interface IComponent {
 
+    /**
+     * Returns string presentation of element.
+     * @return string presentation of element
+     */
     String getElement();
 
 }

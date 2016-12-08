@@ -15,7 +15,7 @@ public class CompositeElement implements ICompositeElement {
     /**
      * List of components of element.
      */
-    protected List<IComponent> components = new ArrayList<>();
+    private List<IComponent> components = new ArrayList<>();
 
     public CompositeElement(Type type) {
         this.type = type;

@@ -1,6 +1,5 @@
 package ua.training.model.text.parser;
 
-import ua.training.model.text.IComponent;
 import ua.training.model.text.composite.*;
 import ua.training.model.text.element.Code;
 import ua.training.model.text.element.Symbol;
