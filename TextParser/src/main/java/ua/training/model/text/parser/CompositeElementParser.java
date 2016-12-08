@@ -1,6 +1,5 @@
 package ua.training.model.text.parser;
 
-import ua.training.model.text.IComponent;
 import ua.training.model.text.composite.*;
 import ua.training.model.text.element.Code;
 import ua.training.model.text.element.Symbol;
@@ -47,12 +46,17 @@ public class CompositeElementParser implements IParser {
         Pattern pattern = Pattern.compile(textExp);
         Matcher matcher = pattern.matcher(stringElement.replaceAll("\n", " "));
         ICompositeElement text = new CompositeElement(CompositeElement.Type.TEXT);
+        String temp = "";
         while (matcher.find()) {
             String element = matcher.group();
             if (element.matches(codeExp)) {
-                text.addComponent(new Code(element));
+                text.addComponent(new Code(element.substring(0, element.lastIndexOf('}') + 1)));
+                temp = element.substring(element.lastIndexOf("}") + 1);
             } else if (element.matches(sentenceInTextExp)) {
-                text.addComponent(parseSentence(element));
+                text.addComponent(parseSentence(temp + element));
+                if (!temp.equals("")) {
+                    temp = "";
+                }
             } else {
                 System.err.print("Error - " + element);
             }

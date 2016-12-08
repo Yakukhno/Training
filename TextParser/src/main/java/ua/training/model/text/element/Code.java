@@ -2,8 +2,12 @@ package ua.training.model.text.element;
 
 import ua.training.model.text.IComponent;
 
-import java.util.List;
-
+/**
+ * Class describes block of code. Implements interface {@link IComponent}.
+ *
+ * @see ua.training.model.text.IComponent
+ * @author Ivan Yakukhno
+ */
 public class Code implements IComponent {
 
     /**

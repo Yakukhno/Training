@@ -3,7 +3,7 @@ package ua.training.model.text.parser;
 import ua.training.model.text.composite.ICompositeElement;
 
 /**
- * Interface describes parser with parse method.
+ * Interface describes parser with parse methods.
  *
  * @author Ivan Yakukhno
  */

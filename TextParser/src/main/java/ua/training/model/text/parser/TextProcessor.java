@@ -31,26 +31,6 @@ public class TextProcessor implements ITextProcessor {
         this.text = parser.parseText(text);
     }
 
-    /**
-     * Sorts map using comparator.
-     * @return sorted map of words and their occurrences
-     */
-    public TreeMap<IComponent, Integer> sortWords(
-            Map<IComponent, Integer> wordsToSort,
-            Comparator<IComponent> comparator) {
-        TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
-        sortedMap.putAll(wordsToSort);
-        return sortedMap;
-    }
-
-    /**
-     * Returns comparator, which compare words by occurrences.
-     * @return comparator, which compare words by occurrences
-     */
-    public Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map) {
-        return Comparator.comparing(map::get);
-    }
-
     public Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence(String requiredWords) {
         Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence = parseRequiredWords(requiredWords);
         List<IComponent> sentences = text.getComponents();
@@ -87,6 +67,26 @@ public class TextProcessor implements ITextProcessor {
     }
 
     /**
+     * Sorts map using comparator.
+     * @return sorted map of words and their occurrences
+     */
+    public TreeMap<IComponent, Integer> sortWords(
+            Map<IComponent, Integer> wordsToSort,
+            Comparator<IComponent> comparator) {
+        TreeMap<IComponent, Integer> sortedMap = new TreeMap<>(comparator);
+        sortedMap.putAll(wordsToSort);
+        return sortedMap;
+    }
+
+    /**
+     * Returns comparator, which compare words by occurrences.
+     * @return comparator, which compare words by occurrences
+     */
+    public Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map) {
+        return Comparator.comparing(map::get);
+    }
+
+    /**
      * Parses required words and put them in wordsOccurrencesInEachSentence map.
      * @param requiredWords string presentation of required words to search
      */
@@ -115,4 +115,5 @@ public class TextProcessor implements ITextProcessor {
     public void setParser(IParser parser) {
         this.parser = parser;
     }
+
 }

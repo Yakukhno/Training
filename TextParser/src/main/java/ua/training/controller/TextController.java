@@ -27,8 +27,9 @@ public class TextController implements IController {
      */
     private ITextProcessor textProcessor;
 
-    private IStringReader textReader;
-
+    /**
+     * Words reader.
+     */
     private IStringReader wordsReader;
 
     /**
@@ -40,7 +41,6 @@ public class TextController implements IController {
     public TextController(IView view, IStringReader textReader,
                           IStringReader wordsReader) {
         this.view = view;
-        this.textReader = textReader;
         this.wordsReader = wordsReader;
         textProcessor = new TextProcessor(textReader.getString());
     }
@@ -50,7 +50,7 @@ public class TextController implements IController {
      * Transmit results of parsing in view.
      */
     public void execute() {
-//        view.showMessage(componentToString(textProcessor.getText(), ""));
+        view.showMessage(componentToString(textProcessor.getText(), ""));
 
         view.showMessage(textProcessor.getWordsOccurrencesInEachSentence(
                 wordsReader.getString()).toString());
@@ -70,11 +70,15 @@ public class TextController implements IController {
     String componentToString(IComponent component, String tabulation) {
         String string = "\n" + tabulation + component.toString();
         if (component instanceof ICompositeElement) {
-            for (IComponent loopComponent : ((ICompositeElement)component).getComponents()) {
+            for (IComponent loopComponent
+                    : ((ICompositeElement)component).getComponents()) {
                 string += componentToString(loopComponent, tabulation + "\t");
             }
         }
         return string;
     }
 
+    void setTextProcessor(ITextProcessor textProcessor) {
+        this.textProcessor = textProcessor;
+    }
 }
