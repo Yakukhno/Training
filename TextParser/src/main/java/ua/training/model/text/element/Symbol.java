@@ -1,12 +1,11 @@
-package ua.training.model.text.symbol;
+package ua.training.model.text.element;
 
 import ua.training.model.text.IComponent;
 
-import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * Class describes symbol. Implements interface {@link IComponent}.
+ * Class describes element. Implements interface {@link IComponent}.
  *
  * @see ua.training.model.text.IComponent
  */
@@ -18,14 +17,14 @@ public class Symbol implements IComponent {
     private char element;
 
     /**
-     * Type of symbol.
+     * Type of element.
      */
     private Type type;
 
     /**
      * Constructor.
-     * @param element symbol
-     * @param type type of symbol
+     * @param element element
+     * @param type type of element
      */
     public Symbol(char element, Type type) {
         this.element = element;
@@ -84,7 +83,7 @@ public class Symbol implements IComponent {
     }
 
     /**
-     * Enum contains types of symbol.
+     * Enum contains types of element.
      */
     public enum Type {
         LETTER, DIGIT, PUNCTUATION_MARK;

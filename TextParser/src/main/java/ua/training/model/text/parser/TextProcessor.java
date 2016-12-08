@@ -61,9 +61,11 @@ public class TextProcessor implements IWordsParser {
             for (int i = 0; i < sentences.size(); i++) {
                 IComponent sentence = sentences.get(i);
                 list.add(i, 0);
-                for (IComponent word : sentence.getComponents()) {
-                    if (word.equals(wordFromList)) {
-                        list.set(i, list.get(i) + 1);
+                if (sentence instanceof Sentence) {
+                    for (IComponent word : sentence.getComponents()) {
+                        if (word.equals(wordFromList)) {
+                            list.set(i, list.get(i) + 1);
+                        }
                     }
                 }
             }

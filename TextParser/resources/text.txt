@@ -1,4 +1,36 @@
-Первые   попытки-пытки соб'рать 3.14 и обобщить разрозненные воспоминания современников об увлечении Наполеоном I шахматами предприняла редакция журнала «Le Palamede», которую тогда возглавлял известный шахматист и литератор Луи Шарль Маэ де Лабурдонне, в 1836 и 1839 годах.
-Были опубликованы две небольшие заметки, которые привлекли к проблеме внимание общественности (заметка 1836 года называлась «Наполеон, любитель шахмат», она была подписана инициалом «М», за которым, как предполагают, скрывался один из издателей журнала — Мари де Мери)[8].
- 14 августа 1836 года первые три номера этого издания приобрёл Александр Сергеевич Пушкин, он успел ознакомиться только со страницами 1—17, которые разрезал для чтения.
-На страницах 12—13 была размещена статья о Наполеоне и шахматах[9]."
+Suppose the balance on their joint account is $120. If a Thread class is responsible for the validation and update of the balance of their bank account, there is a slight chance that the husband’s thread will enable him to withdraw $100, but that before the actual withdrawal the wife’s thread will come in trying to validate a $50 withdrawal. She is also enabled to make her withdrawal, because $120 is still there! The couple would successfully withdraw a total of $150, leaving a negative balance in their account. This is an example of a race condition.
+A special keyword, synchronized, prevents race conditions from happening. This keyword places a lock (a monitor) on an important object or piece of code to make sure that only one thread at a time will have access. The code in Listing 11 locks the entire method withdrawCash()so no other thread will get access to the specified portion of code until the current (locking) thread has finished its execution of withdrawCash().
+
+public final class ATMProcessor extends Thread, Run,Fdf implements Runnable {
+...
+synchronized withdrawCash(int accountID, int amount){
+// Some thread-safe code goes here, i.e. reading from
+// a file or a database
+...
+boolean allowTransaction = validateWithdrawal(accountID,
+amount);
+if (allowTransaction){
+updateBalance(accountID, amount, “Withdraw”);
+}
+else {
+System.out.println(“Not enough money on the account”);
+}
+}
+}
+locks should be placed for the shortest possible time to avoid slowing down the program: That’s why synchronizing short blocks of code is preferable to synchronizing whole methods. Listing 12 shows how to synchronize only the portion of the code that may cause the race condition, rather then locking the entire method withdrawCash().
+class ATMProcessor extends Thread {
+...
+withdrawCash(int accountID, int amount){
+// Some thread-safe code goes here, i.e. reading from
+// a file or a database
+...
+synchronized(this) {
+if (allowTransaction){
+updateBalance(accountID, amount, “Withdraw”);
+}
+else {
+System.out.println(“Not enough money on the account”);
+}
+}
+}
+When a synchronized block is executed, the section of the code in parentheses is locked and can’t be used by any other thread that’s locked on the same section of the code until the lock is released. Listing 12 locks the current instance of the class ATMProcessor (represented by the this keyword) only for the duration of the updateBalance() method, which is a shorter period of time than locking withdrawCash() would take.

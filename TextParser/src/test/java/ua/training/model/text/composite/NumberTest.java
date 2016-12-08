@@ -3,7 +3,7 @@ package ua.training.model.text.composite;
 import org.junit.Before;
 import org.junit.Test;
 import ua.training.model.text.IComponent;
-import ua.training.model.text.symbol.Symbol;
+import ua.training.model.text.element.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package ua.training.model.text.composite;
 
-import ua.training.model.text.symbol.Symbol;
+import ua.training.model.text.element.Symbol;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
