@@ -3,7 +3,7 @@ package ua.training.model.text.element;
 import ua.training.model.text.IComponent;
 
 /**
- * Class describes element. Implements interface {@link IComponent}.
+ * Class describes symbol. Implements interface {@link IComponent}.
  *
  * @see ua.training.model.text.IComponent
  * @author Ivan Yakukhno

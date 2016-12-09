@@ -12,12 +12,12 @@ import static org.mockito.Mockito.*;
 
 public class TextProcessorTest {
 
-    private TextProcessor wordsParser;
+    private TextProcessor textProcessor;
     private IParser parser = new CompositeElementParser();
 
     @Before
     public void before() {
-        wordsParser = new TextProcessor("");
+        textProcessor = new TextProcessor();
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TextProcessorTest {
                 parser.parseSentence("И я тоже гляжу ей в глаза.")
         ));
         when(text.getComponents()).thenReturn(list);
-        wordsParser.setText(text);
+        textProcessor.setText(text);
 
         Map<IComponent, List<Integer>> map = new HashMap<>();
         map.put(parser.parseWord("в"),
@@ -41,7 +41,7 @@ public class TextProcessorTest {
         map.put(parser.parseWord("она"),
                 new ArrayList<>(Arrays.asList(0, 0, 0, 0)));
 
-        Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence = wordsParser
+        Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence = textProcessor
                 .getWordsOccurrencesInEachSentence("в буря она");
 
         assertEquals(map, wordsOccurrencesInEachSentence);
@@ -52,7 +52,7 @@ public class TextProcessorTest {
         wordsOccurrencesInAllSentences.put(parser.parseWord("она"), 0);
 
         assertEquals(wordsOccurrencesInAllSentences,
-                wordsParser.getWordsOccurrencesInAllSentences("в буря она"));
+                textProcessor.getWordsOccurrencesInAllSentences("в буря она"));
     }
 
     @Test
@@ -69,8 +69,8 @@ public class TextProcessorTest {
         wordsOccurrencesInAllSentences.put(mock4, 0);
 
         TreeMap<IComponent, Integer> sortedMap =
-                wordsParser.sortWords(wordsOccurrencesInAllSentences,
-                        wordsParser.wordsByOccurrencesComparator(
+                textProcessor.sortWords(wordsOccurrencesInAllSentences,
+                        textProcessor.wordsByOccurrencesComparator(
                                 wordsOccurrencesInAllSentences));
         boolean isSorted = true;
         Iterator<Integer> iterator = sortedMap.values().iterator();
@@ -93,7 +93,7 @@ public class TextProcessorTest {
                         parser.parseWord("bank"),
                         parser.parseWord("account"),
                         parser.parseWord("is"))),
-                wordsParser.parseRequiredWords("bank  account    is").keySet());
+                textProcessor.parseRequiredWords("bank  account    is").keySet());
     }
 
 }

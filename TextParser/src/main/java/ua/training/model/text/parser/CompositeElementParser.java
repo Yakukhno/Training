@@ -8,40 +8,41 @@ import ua.training.model.text.element.SymbolFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class has methods to parse string values
+ * in {@link ICompositeElement} presentations.
+ * Implements {@link IParser} interface.
+ *
+ * @author Ivan Yakukhno
+ */
 public class CompositeElementParser implements IParser {
 
+    // regular expressions to parse elements
     private String codeExp = "(((package|import(\\s+static)?)\\s+\\w+" +
             "(\\s*\\.\\s*\\w+)*\\s*;)" +
             "|(public\\s+)?((abstract|final)\\s+)?" +
             "class\\s+\\w+((\\s+extends\\s+\\w+(\\s*,\\s*\\w*)*)?" +
             "(\\s+implements\\s+\\w+(\\s*,\\s*\\w*)*)?)" +
             "\\s*\\{).*?}(\\w+\\s+\\w+\\s+)";
-
     private String sentenceInTextExp = ".*?(\\?!|[.?!](\\.\\.)?)(?!\\d)";
-
     private String textExp = codeExp + "|" + sentenceInTextExp;
-
     private String wordInSentenceExp = "^[а-яА-яЁёA-Za-z\\-']+$";
-
     private String numberInSentenceExp = "^\\d+(\\.*\\d+)?$";
-
     private String punctuationInSentenceExp = "[.,?!\\[\\]—\\-()«»'\":;]";
-
     private String sentenceExp = "[а-яА-яЁё\\w\\-.']+(?=\\s|" + punctuationInSentenceExp +
             ")|" + punctuationInSentenceExp;
-
     private String letterExp = "[а-яА-яЁёA-Za-z]";
-
     private String punctuationInWordExp = "['\\-]";
-
     private String wordExp = letterExp + "|" + punctuationInSentenceExp;
-
     private String digitExp = "\\d";
-
     private String punctuationExp = "\\.";
-
     private String numberExp = digitExp + "|" + punctuationExp;
 
+    /**
+     * Returns parsed text in {@link ICompositeElement} object presentation.
+     * @param stringElement string to parse
+     * @return parsed text in {@link ICompositeElement} object presentation
+     */
     public ICompositeElement parseText(String stringElement) {
         Pattern pattern = Pattern.compile(textExp);
         Matcher matcher = pattern.matcher(stringElement.replaceAll("\n", " "));
@@ -64,6 +65,11 @@ public class CompositeElementParser implements IParser {
         return text;
     }
 
+    /**
+     * Returns parsed sentence in {@link ICompositeElement} object presentation.
+     * @param string string to parse
+     * @return parsed sentence in {@link ICompositeElement} object presentation
+     */
     public ICompositeElement parseSentence(String string) {
         Pattern pattern = Pattern.compile(sentenceExp);
         Matcher matcher = pattern.matcher(string);
@@ -85,6 +91,11 @@ public class CompositeElementParser implements IParser {
         return sentence;
     }
 
+    /**
+     * Returns parsed word in {@link ICompositeElement} object presentation.
+     * @param string string to parse
+     * @return parsed word in {@link ICompositeElement} object presentation
+     */
     public ICompositeElement parseWord(String string) {
         Pattern pattern = Pattern.compile(wordExp);
         Matcher matcher = pattern.matcher(string);
@@ -104,6 +115,11 @@ public class CompositeElementParser implements IParser {
         return word;
     }
 
+    /**
+     * Returns parsed number in {@link ICompositeElement} object presentation.
+     * @param string string to parse
+     * @return parsed number in {@link ICompositeElement} object presentation
+     */
     public ICompositeElement parseNumber(String string) {
         Pattern pattern = Pattern.compile(numberExp);
         Matcher matcher = pattern.matcher(string);

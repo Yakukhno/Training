@@ -30,7 +30,7 @@ public class TextControllerTest {
         when(textProcessor.getText()).thenReturn(mock(IComponent.class));
         when(wordsReader.getString()).thenReturn("test 2");
 
-        controller = new TextController(view, textReader, wordsReader);
+        controller = new TextController(view, textProcessor, textReader, wordsReader);
         controller.setTextProcessor(textProcessor);
 
         controller.execute();

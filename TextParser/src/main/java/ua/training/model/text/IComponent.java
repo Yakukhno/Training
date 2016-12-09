@@ -1,7 +1,7 @@
 package ua.training.model.text;
 
 /**
- * Interface describes some element, which can parse something.
+ * Interface describes element, which can return its string value.
  *
  * @author Ivan Yakukhno
  */

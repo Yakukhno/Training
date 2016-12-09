@@ -24,13 +24,10 @@ public class TextProcessor implements ITextProcessor {
     private IParser parser = new CompositeElementParser();
 
     /**
-     * Constructor initialized text field with parsed value.
-     * @param text string text for processing
+     * Returns map of words and their occurrences in each sentence.
+     * @param requiredWords words to search in text
+     * @return map of words and their occurrences
      */
-    public TextProcessor(String text) {
-        this.text = parser.parseText(text);
-    }
-
     public Map<IComponent, List<Integer>> getWordsOccurrencesInEachSentence(String requiredWords) {
         Map<IComponent, List<Integer>> wordsOccurrencesInEachSentence = parseRequiredWords(requiredWords);
         List<IComponent> sentences = text.getComponents();
@@ -53,6 +50,11 @@ public class TextProcessor implements ITextProcessor {
         return wordsOccurrencesInEachSentence;
     }
 
+    /**
+     * Returns map of words and their occurrences in all sentences.
+     * @param requiredWords words to search in text
+     * @return map of words and their occurrences
+     */
     public Map<IComponent, Integer> getWordsOccurrencesInAllSentences(String requiredWords) {
         Set<Map.Entry<IComponent, List<Integer>>> entrySet
                 = getWordsOccurrencesInEachSentence(requiredWords).entrySet();
@@ -68,7 +70,9 @@ public class TextProcessor implements ITextProcessor {
 
     /**
      * Sorts map using comparator.
-     * @return sorted map of words and their occurrences
+     * @param wordsToSort map to sort
+     * @param comparator sorting comparator
+     * @return sorted map
      */
     public TreeMap<IComponent, Integer> sortWords(
             Map<IComponent, Integer> wordsToSort,
@@ -79,8 +83,8 @@ public class TextProcessor implements ITextProcessor {
     }
 
     /**
-     * Returns comparator, which compare words by occurrences.
-     * @return comparator, which compare words by occurrences
+     * Returns comparator, which compare {@link IComponent} objects by values.
+     * @return comparator, which compare {@link IComponent} objects by values
      */
     public Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map) {
         return Comparator.comparing(map::get);
@@ -100,10 +104,17 @@ public class TextProcessor implements ITextProcessor {
         return wordsOccurrencesInEachSentence;
     }
 
+    //getters & setters
+
     public ICompositeElement getText() {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = parser.parseText(text);
+    }
+
+    @Override
     public void setText(ICompositeElement text) {
         this.text = text;
     }

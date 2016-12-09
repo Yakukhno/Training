@@ -5,6 +5,7 @@ import ua.training.model.text.composite.ICompositeElement;
 /**
  * Interface describes parser with parse methods.
  *
+ * @see CompositeElementParser
  * @author Ivan Yakukhno
  */
 public interface IParser {

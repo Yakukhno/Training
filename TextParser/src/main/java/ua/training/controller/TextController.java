@@ -30,19 +30,26 @@ public class TextController implements IController {
     /**
      * Words reader.
      */
+    private IStringReader textReader;
+
+    /**
+     * Words reader.
+     */
     private IStringReader wordsReader;
 
     /**
-     * Constructor. Creates {@link TextProcessor} object.
+     * Constructor.
      * @param view view
+     * @param textProcessor text processor to process text
      * @param textReader reader of text
      * @param wordsReader reader of words
      */
-    public TextController(IView view, IStringReader textReader,
-                          IStringReader wordsReader) {
+    public TextController(IView view, ITextProcessor textProcessor,
+                          IStringReader textReader, IStringReader wordsReader) {
         this.view = view;
+        this.textProcessor = textProcessor;
+        this.textReader = textReader;
         this.wordsReader = wordsReader;
-        textProcessor = new TextProcessor(textReader.getString());
     }
 
     /**
@@ -50,6 +57,8 @@ public class TextController implements IController {
      * Transmit results of parsing in view.
      */
     public void execute() {
+        textProcessor.setText(textReader.getString());
+
         view.showMessage(componentToString(textProcessor.getText(), ""));
 
         view.showMessage(textProcessor.getWordsOccurrencesInEachSentence(
@@ -68,14 +77,15 @@ public class TextController implements IController {
      * @return string presentation of component
      */
     String componentToString(IComponent component, String tabulation) {
-        String string = "\n" + tabulation + component.toString();
+        StringBuilder string = new StringBuilder();
+        string.append("\n").append(tabulation).append(component.toString());
         if (component instanceof ICompositeElement) {
             for (IComponent loopComponent
                     : ((ICompositeElement)component).getComponents()) {
-                string += componentToString(loopComponent, tabulation + "\t");
+                string.append(componentToString(loopComponent, tabulation + "\t"));
             }
         }
-        return string;
+        return string.toString();
     }
 
     void setTextProcessor(ITextProcessor textProcessor) {

@@ -5,6 +5,12 @@ import ua.training.model.text.IComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class describes composite element.
+ * Implements interface {@link ICompositeElement}.
+ *
+ * @author Ivan Yakukhno
+ */
 public class CompositeElement implements ICompositeElement {
 
     /**
@@ -17,10 +23,18 @@ public class CompositeElement implements ICompositeElement {
      */
     private List<IComponent> components = new ArrayList<>();
 
+    /**
+     * Constructor.
+     * @param type {@link Type} of composite element
+     */
     public CompositeElement(Type type) {
         this.type = type;
     }
 
+    /**
+     * Returns string presentation of element.
+     * @return string presentation of element
+     */
     public String getElement() {
         String str = "";
         for (IComponent component : components) {
@@ -29,19 +43,37 @@ public class CompositeElement implements ICompositeElement {
         return str + " ";
     }
 
+    /**
+     * Adds {@link IComponent} object to components of composite.
+     * @param component object to add to components of composite
+     */
     public void addComponent(IComponent component) {
         components.add(component);
     }
 
+    /**
+     * Returns {@link Type} of composite element.
+     * @return {@link Type} of composite element
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Returns components of composite.
+     * @return components of composite
+     */
     @Override
     public List<IComponent> getComponents() {
         return components;
     }
 
+    /**
+     * Equals objects of {@link CompositeElement} type using components
+     * and type fields.
+     * @param o object to equality.
+     * @return is objects equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,6 +85,10 @@ public class CompositeElement implements ICompositeElement {
         return components != null ? components.equals(that.components) : that.components == null;
     }
 
+    /**
+     * Returns hash code of object.
+     * @return hash code of object
+     */
     @Override
     public int hashCode() {
         int result = type != null ? type.hashCode() : 0;
@@ -60,6 +96,10 @@ public class CompositeElement implements ICompositeElement {
         return result;
     }
 
+    /**
+     * Return string presentation of {@link CompositeElement} object.
+     * @return string presentation of {@link CompositeElement} object
+     */
     @Override
     public String toString() {
         return type + "{" + getElement() + '}';

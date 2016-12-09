@@ -1,6 +1,7 @@
 package ua.training.model.text.parser;
 
 import ua.training.model.text.IComponent;
+import ua.training.model.text.composite.ICompositeElement;
 
 import java.util.Comparator;
 import java.util.List;
@@ -47,4 +48,15 @@ public interface ITextProcessor {
      */
     Comparator<IComponent> wordsByOccurrencesComparator(Map<IComponent, Integer> map);
 
+    /**
+     * Sets text value.
+     * @param text string value of text
+     */
+    void setText(String text);
+
+    /**
+     * Sets text value.
+     * @param text {@link ICompositeElement} object, which presents text.
+     */
+    void setText(ICompositeElement text);
 }
